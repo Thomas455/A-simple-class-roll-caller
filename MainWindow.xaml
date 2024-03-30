@@ -1,0 +1,41 @@
+﻿<Window x:Class="班级点名器.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:班级点名器"
+        mc:Ignorable="d"
+        Title="简易点名器" Height="450" Width="800"
+        Loaded="Window_Loaded" >
+    
+    <Viewbox>
+        <Grid>
+            <!--标签页控件-->
+            <TabControl Margin="0,0,0,0">
+                <TabItem Header="点名" Margin="-2,0,0,0" Width="60" Height="24" HorizontalAlignment="Left">
+                    <Grid Background="white" Margin="-16,0,-6,-40" Width="760" Height="380">
+                        <!--窗口一-->
+                        <Button Content="点名" Name="start" Margin="310,270,0,0" Height="50" Width="150" HorizontalAlignment="Left" VerticalAlignment="Top" Click="start_Click" />
+                        <Label Name="Name" Margin="150,100,150,150" FontSize="72" HorizontalAlignment="Center">点名加载中</Label>
+                        <Label Name="File" Margin="100,0,0,348" FontSize="10" HorizontalAlignment="Left" Width="660"></Label>
+                        <Button Content="查看名单" Name="view" Margin="310,280,50,0" Height="30" Width="100" HorizontalAlignment="Right" VerticalAlignment="Top" Click="view_Click" />
+
+                    </Grid>
+
+                </TabItem>
+                <TabItem Header="点名设置" Margin="-2,0,0,0" Width="60" Height="24" HorizontalAlignment="Left">
+                    <Grid Background="White" Margin="-16,0,-6,-40" Width="760" Height="380">
+                        <TextBox x:Name="NamePath" HorizontalAlignment="Left" Margin="70,45,0,0" TextWrapping="Wrap" Text=" " VerticalAlignment="Top" Width="517" Background="#19000000" Height="20"/>
+                        <Button Content="浏览......" HorizontalAlignment="Right" Margin="0,45,120,0" VerticalAlignment="Top" Width="50" Height="20" Click="GetPathButton_Click"/>
+                        <Button Content="查看帮助" HorizontalAlignment="Right" Margin="0,45,55,0" VerticalAlignment="Top" Width="60" Height="20" Click="TipsButton_Click"/>
+                        <Button Content="设定" HorizontalAlignment="Right" Margin="0,70,55,0" VerticalAlignment="Top" Width="60" Height="20" Click="SetButton_Click"/>
+                    </Grid>
+
+
+
+                </TabItem>
+            </TabControl>
+
+        </Grid>
+    </Viewbox>
+</Window >
