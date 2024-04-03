@@ -3,7 +3,7 @@
 //作者B站：
 //          逗比Thomas
 //
-//不要看138行的代码！！！
+//不要看171行的代码！！！
 //
 //
 //
@@ -67,7 +67,31 @@ namespace 班级点名器
                 Can_start = false;
                 return;//如果没有设定，就退出检查
             }
-            string extension = System.IO.Path.GetExtension(Temp_NamePath);
+
+            string extension;
+            try
+            {
+                extension = System.IO.Path.GetExtension(Temp_NamePath);
+            }
+            catch (IOException error)
+            {
+                // 处理文件读取时可能出现的异常，例如文件不存在、没有读取权限等
+                Console.WriteLine("文件读取错误: " + error.Message);
+                System.Windows.MessageBox.Show("文件读取错误: " + error.Message);//弹出提示框
+                System.Windows.MessageBox.Show("先前设定的路径" + Temp_NamePath + "似乎不是一个合法的路径，已经重置设置");//弹出提示框
+                NamePath.Text = "";//重置文本框
+                Temp_NamePath = string.Empty;
+                Temp_NamePath_Time = string.Empty;
+                Properties.Settings.Default.Save_NamePath = Temp_NamePath;
+                Properties.Settings.Default.PathSettingTime = Temp_NamePath_Time;
+                Properties.Settings.Default.Save();//重置所有保存的内容
+                File.Content = "路径未设定";
+                Name.Content = "请设置点名";
+                Can_start = false;
+                return;
+            }
+
+            extension = System.IO.Path.GetExtension(Temp_NamePath);
             if (extension == ".txt")
             {
                 NamePath.Text = Temp_NamePath;//若路径合法，则自动设定这个路径
