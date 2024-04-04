@@ -31,7 +31,7 @@
                         <Button Content="查看帮助" HorizontalAlignment="Right" Margin="0,45,55,0" VerticalAlignment="Top" Width="60" Height="20" Click="TipsButton_Click"/>
                         <Button Content="设定" HorizontalAlignment="Right" Margin="0,70,55,0" VerticalAlignment="Top" Width="60" Height="20" Click="SetButton_Click"/>
                         <Button Content="更多信息" HorizontalAlignment="Right" Margin="0,0,50,100" VerticalAlignment="Bottom" Width="60" Height="20" Click="InfoButton_Click"/>
-                        
+                        <Label Margin="70,20,0,0" Height="30" Width="200" HorizontalAlignment="Left" VerticalAlignment="Top" >txt名单路径：</Label>
                     </Grid>
 
 
