@@ -65,7 +65,7 @@ namespace 班级点名器
             if (Temp_NamePath.Contains("\"") == true)
             {
                 Console.WriteLine("文件读取错误: 不能有冒号");
-                System.Windows.MessageBox.Show("文件读取错误: 不能有冒号！，已经重置设置");//弹出提示框
+                System.Windows.MessageBox.Show("文件读取错误: 不能有冒号！，已经重置设置","错误", MessageBoxButton.OK, MessageBoxImage.Warning);//弹出提示框
                 NamePath.Text = "";//重置文本框
                 Temp_NamePath = string.Empty;
                 Temp_NamePath_Time = string.Empty;
@@ -99,7 +99,7 @@ namespace 班级点名器
             {
                 // 处理文件读取时可能出现的异常，例如文件不存在、没有读取权限等
                 Console.WriteLine("文件读取错误: " + error.Message);
-                System.Windows.MessageBox.Show("文件读取错误: " + error.Message);//弹出提示框
+                System.Windows.MessageBox.Show("文件读取错误: " + error.Message,"后缀错误",MessageBoxButton.OK, MessageBoxImage.Error);//弹出提示框
                 System.Windows.MessageBox.Show("先前设定的路径" + Temp_NamePath + "似乎不是一个合法的路径，已经重置设置");//弹出提示框
                 NamePath.Text = "";//重置文本框
                 Temp_NamePath = string.Empty;
@@ -123,7 +123,7 @@ namespace 班级点名器
             }
             else
             {
-                System.Windows.MessageBox.Show("先前设定的路径" + Temp_NamePath + "似乎不是一个合法的路径，已经重置设置");//弹出提示框
+                System.Windows.MessageBox.Show("先前设定的路径" + Temp_NamePath + "似乎不是一个合法的路径，已经重置设置","路径错误", MessageBoxButton.OK, MessageBoxImage.Warning);//弹出提示框
                 NamePath.Text = "";//重置文本框
                 Temp_NamePath = string.Empty;
                 Temp_NamePath_Time = string.Empty;
@@ -135,6 +135,7 @@ namespace 班级点名器
                 Can_start = false;
                 return;
             }
+            return;
         }
 
 
@@ -144,7 +145,7 @@ namespace 班级点名器
         {
             if (Can_start == false)
             {
-                System.Windows.MessageBox.Show("请先完成设置");//弹出提示框
+                System.Windows.MessageBox.Show("请先完成设置","错误", MessageBoxButton.OK, MessageBoxImage.Warning);//弹出提示框
                 return;
             }
             File.Content = "当前使用的名单：" + Temp_NamePath + "    设定于:" + Temp_NamePath_Time;
@@ -170,7 +171,7 @@ namespace 班级点名器
             {
                 // 处理文件读取时可能出现的异常，例如文件不存在、没有读取权限等
                 Console.WriteLine("文件读取错误: " + error.Message);
-                System.Windows.MessageBox.Show("文件读取错误: " + error.Message);//弹出提示框
+                System.Windows.MessageBox.Show("文件读取错误: " + error.Message,"读取错误",MessageBoxButton.OK, MessageBoxImage.Warning);//弹出提示框
                 return;
             }
             // 读取文件的所有行，并将它们存储到字符串数组中
@@ -229,7 +230,7 @@ namespace 班级点名器
             }
             Console.WriteLine("幸运儿：" + Lucky);
             start.IsEnabled = true;//解锁按钮
-
+            return;
         }
 
 
@@ -258,11 +259,14 @@ namespace 班级点名器
             return;
         }
 
+
+
         //帮助按钮
         private void TipsButton_Click(object sender, RoutedEventArgs e)
         {
             string Tips = "温馨提示：\n 1.目前只支持txt文件。 \n 2.txt文件格式：一个名字换行一次。\n 3.路径请使用相对路径，不需要双引号。 \n 4.txt内的信息应尽量采用UTF-8编码 \n";
-            System.Windows.MessageBox.Show(Tips);//弹出提示框
+            System.Windows.MessageBox.Show(Tips,"提示",MessageBoxButton.OK, MessageBoxImage.Information);//弹出提示框
+            return;
         }
 
 
@@ -282,7 +286,7 @@ namespace 班级点名器
             if(Temp_NamePath.Contains("\"")==true)
             {
                 Console.WriteLine("文件读取错误: 不能有冒号");
-                System.Windows.MessageBox.Show("文件读取错误: 不能有冒号！，已经重置设置" );//弹出提示框
+                System.Windows.MessageBox.Show("文件读取错误: 不能有冒号！，已经重置设置", "错误", MessageBoxButton.OK, MessageBoxImage.Warning);//弹出提示框
                 NamePath.Text = "";//重置文本框
                 Temp_NamePath = string.Empty;
                 Temp_NamePath_Time = string.Empty;
@@ -306,7 +310,7 @@ namespace 班级点名器
                 // 处理文件读取时可能出现的异常，例如文件不存在、没有读取权限等
                 Console.WriteLine("文件读取错误: " + error.Message);
                 System.Windows.MessageBox.Show("文件读取错误: " + error.Message);//弹出提示框
-                System.Windows.MessageBox.Show("先前设定的路径" + Temp_NamePath + "似乎不是一个合法的路径，已经重置设置");//弹出提示框
+                System.Windows.MessageBox.Show("先前设定的路径" + Temp_NamePath + "似乎不是一个合法的路径，已经重置设置","路径错误",MessageBoxButton.OK, MessageBoxImage.Warning);//弹出提示框
                 NamePath.Text = "";//重置文本框
                 Temp_NamePath = string.Empty;
                 Temp_NamePath_Time = string.Empty;
@@ -339,7 +343,7 @@ namespace 班级点名器
                 {
                     // 处理文件读取时可能出现的异常，例如文件不存在、没有读取权限等
                     Console.WriteLine("文件读取错误: " + error.Message);
-                    System.Windows.MessageBox.Show("文件读取错误: " + error.Message);//弹出提示框
+                    System.Windows.MessageBox.Show("文件读取错误: " + error.Message, "路径错误", MessageBoxButton.OK, MessageBoxImage.Warning);//弹出提示框
                     Can_start = false;
                     return;
                 }
@@ -362,10 +366,13 @@ namespace 班级点名器
             }
             else
             {
-                System.Windows.MessageBox.Show(Temp_NamePath + "似乎不是一个合法的路径，已经重置设置");//弹出提示框
+                System.Windows.MessageBox.Show(Temp_NamePath + "似乎不是一个合法的路径，已经重置设置", "路径错误", MessageBoxButton.OK, MessageBoxImage.Warning);//弹出提示框
                 NamePath.Text = "";//重置文本框
                 Temp_NamePath = string.Empty;
                 Temp_NamePath_Time = string.Empty;//清空变量
+                Properties.Settings.Default.Save_NamePath = Temp_NamePath;
+                Properties.Settings.Default.PathSettingTime = Time;
+                Properties.Settings.Default.Save();//保存设定
                 File.Content = "路径未设定";
                 Name.Content = "请设置点名";
                 Can_start = false;
@@ -375,31 +382,37 @@ namespace 班级点名器
         }
 
 
-        //预览文件
-        private void view_Click(object sender, RoutedEventArgs e)
+        //预览名单
+        private void View_Click(object sender, RoutedEventArgs e)
         {
+            //检查名单路径是否空白
             if (Temp_NamePath == "")
             {
                 File.Content = "路径未设定";
                 Name.Content = "请设置点名";
-                System.Windows.MessageBox.Show("请先设置路径！");//弹出提示框
+                System.Windows.MessageBox.Show("请先设置路径！", "",MessageBoxButton.OK, MessageBoxImage.Warning);//弹出提示框
                 Can_start = false;
                 return;//如果没有设定，就退出检查
             }
 
-            try
+            //检查是否已经准备好点名字
+            if (Can_start == true)
             {
-                System.Diagnostics.Process.Start(Temp_NamePath);//尝试打开文件
+                //打开预览窗口
+                var window = new NameView();
+                window.Owner = this;
+                window.Show();
+
 
             }
-            catch (IOException error)
+            else
             {
-                // 处理文件读取时可能出现的异常，例如文件不存在、没有读取权限等
-                Console.WriteLine("文件读取错误: " + error.Message);
-                System.Windows.MessageBox.Show("文件读取错误: " + error.Message);//弹出提示框
-                Can_start= false;
+                System.Windows.MessageBox.Show("请先完成设置", "", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
+
             }
+
+            return;
 
 
         }
@@ -411,6 +424,7 @@ namespace 班级点名器
 
             window.Owner = this;
             window.Show();
+            return;
         }
     }
 }

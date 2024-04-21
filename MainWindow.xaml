@@ -18,8 +18,8 @@
                         <Button Content="点名" Name="start" Margin="310,270,0,0" Height="50" Width="150" HorizontalAlignment="Left" VerticalAlignment="Top" Click="start_Click" IsEnabled="True"/>
                         <Label Name="Name" Margin="150,100,150,150" FontSize="72" HorizontalAlignment="Center">点名加载中</Label>
                         <Label Name="File" Margin="100,0,0,348" FontSize="10" HorizontalAlignment="Left" Width="660"></Label>
-                        <Button Content="查看名单" Name="view" Margin="310,280,50,0" Height="30" Width="100" HorizontalAlignment="Right" VerticalAlignment="Top" Click="view_Click" />
-                        <Label Name="Version" Margin="0,0,3,350" Height="30" Width="50" HorizontalAlignment="Right" VerticalAlignment="Top">v1.5</Label>
+                        <Button Content="查看名单" Name="view" Margin="310,280,50,0" Height="30" Width="100" HorizontalAlignment="Right" VerticalAlignment="Top" Click="View_Click" />
+                        <Label Name="Version" Margin="0,0,3,350" Height="30" Width="50" HorizontalAlignment="Right" VerticalAlignment="Top">v1.6</Label>
 
                     </Grid>
 

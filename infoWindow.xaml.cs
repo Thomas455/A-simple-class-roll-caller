@@ -34,7 +34,7 @@ namespace 班级点名器
         {
             try
             {
-                System.Diagnostics.Process.Start("https://github.com/Thomas455/A-simple-class-roll-caller");//尝试打开文件
+                System.Diagnostics.Process.Start("https://github.com/Thomas455/A-simple-class-roll-caller");//尝试打开网页
 
             }
             catch (IOException error)
