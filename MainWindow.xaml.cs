@@ -241,21 +241,25 @@ namespace 班级点名器
         //路径选择按钮事件
         private void GetPathButton_Click(object sender, RoutedEventArgs e)
         {
-            string GetPath = string.Empty;
             OpenFileDialog openFileDialog = new OpenFileDialog()//打开路径选择对话框
             {
+                Multiselect = false,//不可选择多个
+                Title = "请选择你的名单",
                 Filter = "Files (*.txt)|*.txt"//选择txt文件
             };
-            Console.WriteLine( openFileDialog.ShowDialog());
-            if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            DialogResult dialogResult = openFileDialog.ShowDialog();//获取返回结果
+            Console.WriteLine(dialogResult);
+            if (dialogResult == System.Windows.Forms.DialogResult.OK)//判断返回结果
             {
-                GetPath = openFileDialog.FileName;
+                Console.WriteLine(openFileDialog.FileName);
+                NamePath.Text = openFileDialog.FileName;//覆盖输入框
             }
             else
             {
+                Console.WriteLine("用户关闭"+dialogResult) ;
                 return;
             }
-            NamePath.Text = GetPath;//覆盖输入框
+            
             return;
         }
 
@@ -361,7 +365,7 @@ namespace 班级点名器
                 File.Content = "当前使用的名单：" + Temp_NamePath + "    设定于:" + Temp_NamePath_Time;
                 Name.Content = "点名已就绪";
                 Can_start = true;
-                System.Windows.MessageBox.Show("设定成功！");//弹出提示框
+                System.Windows.MessageBox.Show("设定成功！","提示");//弹出提示框
                 start.IsEnabled = true;//解锁按钮
             }
             else

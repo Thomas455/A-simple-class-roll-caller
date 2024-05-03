@@ -29,6 +29,7 @@ namespace 班级点名器
             InitializeComponent();
         }
 
+        
 
         //窗口加载完成
         private void NameViewWindow_Loaded(object sender, RoutedEventArgs e)

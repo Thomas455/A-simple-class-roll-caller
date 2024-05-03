@@ -20,8 +20,28 @@
                     <Rectangle Fill="WhiteSmoke" Width="500" Height="500"></Rectangle>
                 </StackPanel>
             </ScrollViewer>
-            <Button Content="打开" HorizontalAlignment="Right" Margin="10,0,2,0" VerticalAlignment="Bottom" Height="20" Width="35" FontSize="7" Click="OpenFileButton_Click"/>
-            <Button Content="刷新" HorizontalAlignment="Right" Margin="10,0,2,25" VerticalAlignment="Bottom" Height="20" Width="35" FontSize="7" Click="NameViewWindow_Loaded"/>
+
+
+
+
+            <Button Content="打开" HorizontalAlignment="Right" Margin="10,0,2,0" VerticalAlignment="Bottom" Height="20" Width="35" Click="OpenFileButton_Click"
+                    FontSize="7" FontFamily="微软雅黑" Background="#FFE0E0E0" BorderThickness="2" Padding="0" Foreground="Black" BorderBrush="#BFC1C1C1">
+                <Button.Resources>
+                    <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="4"/>
+                </Style>
+                </Button.Resources>
+            </Button>
+
+
+            <Button Content="刷新" HorizontalAlignment="Right" Margin="10,0,2,25" VerticalAlignment="Bottom" Height="20" Width="35" Click="NameViewWindow_Loaded"
+                            FontSize="7" FontFamily="微软雅黑" Background="#FFE0E0E0" BorderThickness="2" Padding="0" Foreground="Black" BorderBrush="#BFC1C1C1">
+                <Button.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="4"/>
+                    </Style>
+                </Button.Resources>
+            </Button>
 
         </Grid>
     </Viewbox>
