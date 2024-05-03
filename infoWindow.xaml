@@ -5,12 +5,22 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:班级点名器"
         mc:Ignorable="d"
-        Title="软件信息" Height="450" Width="400" Loaded="infoWindow_Loaded">
+        Title="软件信息" Height="450" Width="400" Loaded="infoWindow_Loaded" ResizeMode="NoResize">
     <Viewbox>
         <Grid>
             <Image Height="25" Width="25" Margin="0,0,0,75" Source="/icon.png" VerticalAlignment="Top"/>
             <TextBlock Name="info" Margin="0,25,0,0"  VerticalAlignment="Top" Height="50" Width="80" FontSize="3" TextAlignment="Center" >一个很简陋的点名器</TextBlock>
-            <Button Content="在GitHub上查看源码" HorizontalAlignment="Center" Margin="0,0,0,10" VerticalAlignment="Bottom" Width="90" Height="10" Click="GithubButton_Click" FontSize="4"/>
+            <Button Content="在GitHub上查看源码" HorizontalAlignment="Center" Margin="0,0,0,10" VerticalAlignment="Bottom" Width="90" Height="10" Click="GithubButton_Click"
+                                FontSize="4" FontFamily="微软雅黑" Background="#FFE0E0E0" BorderThickness="0.5" Padding="0" Foreground="Black" BorderBrush="#BFC1C1C1" >
+                <Button.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="1.5"/>
+                    </Style>
+                </Button.Resources>
+                <Button.Effect>
+                    <DropShadowEffect ShadowDepth="0.2" BlurRadius="0.5" Color="#FFB9B9B9"/>
+                </Button.Effect>
+            </Button>
 
         </Grid>
     </Viewbox>
