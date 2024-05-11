@@ -56,7 +56,7 @@
                             
                         </Button>
 
-                        <Label Name="Version" Margin="0,0,0,0" Height="25" Width="50" HorizontalAlignment="Right" VerticalAlignment="Top">v1.6</Label>
+                        <Label Name="VersionShow" Margin="0,0,10,0" Height="25" Width="60" HorizontalAlignment="Right" VerticalAlignment="Top" Loaded="GetVersion">未知版本</Label>
 
                         
 

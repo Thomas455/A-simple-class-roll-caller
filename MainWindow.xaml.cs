@@ -3,7 +3,7 @@
 //作者B站：
 //          逗比Thomas
 //
-//不要看194行的代码！！！
+//不要看206行的代码！！！
 //
 //
 //
@@ -30,6 +30,7 @@ using System.Windows.Forms;
 using OpenFileDialog = System.Windows.Forms.OpenFileDialog;
 using static System.Windows.Forms.LinkLabel;
 using System.Windows.Forms.DataVisualization.Charting;
+using System.Reflection;
 
 
 namespace 班级点名器
@@ -52,6 +53,17 @@ namespace 班级点名器
             
 
             InitializeComponent();
+        }
+
+        //获取版本号
+        public void GetVersion(object sender, EventArgs e)
+        {
+            AssemblyName assemblyName = this.GetType().Assembly.GetName();//获取当前程序名
+            Version version = assemblyName.Version;//获取版本号
+            VersionShow.Content = version;//替换文本
+            Console.WriteLine("版本信息",assemblyName);
+
+            return;
         }
 
         //界面加载完成后

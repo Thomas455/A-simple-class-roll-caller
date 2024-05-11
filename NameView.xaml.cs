@@ -76,7 +76,7 @@ namespace 班级点名器
             }
             catch(IOException error)
             {
-
+                System.Windows.MessageBox.Show("文件读取错误: " + error.Message);
                 this.Close();//关闭窗口
                 return;//结束进程
             }
