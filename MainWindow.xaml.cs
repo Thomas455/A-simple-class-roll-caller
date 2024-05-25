@@ -3,7 +3,7 @@
 //作者B站：
 //          逗比Thomas
 //
-//不要看206行的代码！！！
+//2025.5.25
 //
 //
 //
@@ -61,7 +61,7 @@ namespace 班级点名器
             AssemblyName assemblyName = this.GetType().Assembly.GetName();//获取当前程序名
             Version version = assemblyName.Version;//获取版本号
             VersionShow.Content = version;//替换文本
-            Console.WriteLine("版本信息",assemblyName);
+            Console.WriteLine("版本信息:" + assemblyName);
 
             return;
         }
@@ -195,44 +195,31 @@ namespace 班级点名器
             //这一部分已经尝试做到高度随机了，让每个人都有机会被抽
             string Lucky = null;//被抽中的幸运儿
 
-            long Long_Tick = DateTime.Now.Ticks;
-            int Tick = (int)Long_Tick;//获取系统时间刻
+            long Long_Tick = DateTime.Now.Ticks;//获取时间刻
 
-            string Str_Time_s = DateTime.Now.ToString("ss");
-            int Time_s=int.Parse(Str_Time_s);
+            string Str_Time_s = DateTime.Now.ToString("ss");//获取秒
+            int Time_s=int.Parse(Str_Time_s);//str to int
 
-            Random Seed_Ramdom = new Random(Tick);
-            Random Random = new Random();
-            int Seed1 = Seed_Ramdom.Next(2);//生成一个随机数，作为种子
-            int Seed2 = Seed_Ramdom.Next(2,4);
-            int Seed3 = Seed_Ramdom.Next(4,8);
-            int Seed4 = Seed_Ramdom.Next(8,16);
-            int Seed5 = Seed_Ramdom.Next(16,32);
-            int Seed6 = Seed_Ramdom.Next(32,64);
-            int Seed7 = Seed_Ramdom.Next(64,128);
-            int Seed8 = Seed_Ramdom.Next(128,256);
-            int Seed9 = Seed_Ramdom.Next(256,512);
-            int Seed10 = Seed_Ramdom.Next(512,1024);
-            int Seed11= Seed_Ramdom.Next(1024,2048);
-            int Seed12= Seed_Ramdom.Next(2048,4096);
-            int Seed13= Seed_Ramdom.Next(4096,8192);
-            int Seed14= Seed_Ramdom.Next(8192,16384);
-            int Seed15= Seed_Ramdom.Next(16384,32768);
-            int Seed = Seed1 + Seed2 + Seed3 + Seed4 + Seed5 + Seed6 + Seed7 + Seed8 + +Seed9 + Seed10 + Seed11 + Seed12 + Seed13 + Seed14 + Seed15;
+            int Seed=0;
+            for (int i = 0;i<= 1000; i++)
+            {
+                Random Seed_Ramdom = new Random();
+                Seed += Seed_Ramdom.Next(1000);//随机种子
+            }
 
 
-            Random Max_Random = new Random(Seed);
-            int Max = Max_Random.Next(15,100);//生成一个随机数，用于决定名单循环次数的最大随机取值
+            //Console.WriteLine(Seed);
+
 
             Random Time_Random = new Random(Seed);
-            int RollTime = Time_Random.Next(10, Max);//生成一个随机数，用于决定名单随机循环次数
+            int RollTime = Time_Random.Next(10, 70);//生成一个随机数，用于决定名单随机循环次数
             
             
             start.IsEnabled = false;//锁定按钮
             for (int i = 0; i<RollTime; i++)//循环名单，抽取幸运儿
             {
                 //点一次名
-                Random Name_random = new Random(Seed + i * Tick / Random.Next(32768) + Time_s);
+                Random Name_random = new Random(Seed + Time_s*i);
                 int randomIndex = Name_random.Next(NameLines.Length);//生成一个随机数，并对应到数组里的内容
                 Lucky = NameLines[randomIndex];
                 Name.Content = Lucky;//切换文本框
@@ -244,6 +231,218 @@ namespace 班级点名器
             start.IsEnabled = true;//解锁按钮
             return;
         }
+
+
+
+
+
+        //批量点名
+        private async void start_MoreName_Click(object sender, RoutedEventArgs e)
+        {
+
+
+
+
+            //读取名单
+            string FileNameToRead = @Temp_NamePath;
+            //用文件里每一行的内容创建一个字符串数组
+            string[] NameLines;
+            try
+            {
+                // 读取文件的所有行，并将它们存储到字符串数组中
+                NameLines = System.IO.File.ReadAllLines(FileNameToRead);
+
+                // 遍历数组并输出每一行的内容
+                foreach (string line in NameLines)
+                {
+                    //Console.WriteLine("当前名单："+line);
+                }
+            }
+            catch (IOException error)
+            {
+                // 处理文件读取时可能出现的异常，例如文件不存在、没有读取权限等
+                Console.WriteLine("文件读取错误: " + error.Message);
+                System.Windows.MessageBox.Show("文件读取错误: " + error.Message, "读取错误", MessageBoxButton.OK, MessageBoxImage.Warning);//弹出提示框
+                return;
+            }
+            // 读取文件的所有行，并将它们存储到字符串数组中
+            NameLines = System.IO.File.ReadAllLines(FileNameToRead);
+
+
+
+
+
+            //随机批量点名部分
+            //这一部分已经尝试做到高度随机了，让每个人都有机会被抽
+            
+
+            long Long_Tick = DateTime.Now.Ticks;//获取时间刻
+
+            string Str_Time_s = DateTime.Now.ToString("ss");//获取秒
+            int Time_s = int.Parse(Str_Time_s);//str to int
+
+            int Seed = 0;
+            /*随机算法
+            for (int i = 0; i <= 1000; i++)
+            {
+                Random Seed_Ramdom = new Random();
+                Seed += Seed_Ramdom.Next(1000);//随机种子
+            }
+            */
+            //Console.WriteLine(Seed);
+            
+
+
+            //获取点名数量
+            int NameNum=0;
+            String NameNum_str;
+            
+            try
+            {
+                
+                NameNum_str = NameNumIn.Text;
+                int.TryParse(NameNumIn.Text, out NameNum);//尝试转换str to int
+                
+            }
+            catch (IOException error)
+            {
+                Console.WriteLine("设定错误: " + error.Message);
+                System.Windows.MessageBox.Show("设定错误: " + error.Message+"点名数量应给是一个数字！", "设置错误", MessageBoxButton.OKCancel, MessageBoxImage.Warning);//弹出提示框
+                NameNumIn.Text= string.Empty;
+                return;
+            }
+
+            if (NameNum > 99)
+            {
+
+                System.Windows.MessageBoxResult Result=System.Windows.MessageBox.Show("你设定的点名数量是："+NameNum+"\n这可能会引起设备卡顿或程序崩溃！如果你希望继续执行，请点击确定。", "设置错误", MessageBoxButton.OKCancel, MessageBoxImage.Warning);//弹出提示框
+                if (Result != System.Windows.MessageBoxResult.OK) return;//如果不点确定，终止进程
+            }
+
+            //是否允许重复
+            bool Can_reName = (bool)reName.IsChecked;
+            Console.WriteLine(Can_reName);
+
+            //防止重复
+            string[] HaveNamed;
+            HaveNamed = new string[NameLines.Length+7];
+            if(NameNum > NameLines.Length && Can_reName != true)
+            {
+                System.Windows.MessageBox.Show("在关闭“允许重复”选项时,点名数量不可大于名单中名字数量！", "设置错误", MessageBoxButton.OKCancel, MessageBoxImage.Warning);//弹出提示框
+                return;
+            }
+            
+
+
+
+
+
+            //点名
+            string Lucky = null;//被抽中的幸运儿
+            start_2.IsEnabled = false;//锁定按钮
+            LuckyName.Text=string.Empty;//清空显示名单
+            LuckyName.Height = 16;
+            for (int i = 1; i <= NameNum; i++)//循环名单，抽取幸运儿
+            {
+                //点一次名
+                //获取种子
+                Seed = 0;
+                for (int j = 0; j <= 1000; j++)
+                {
+                    Random Seed_Ramdom = new Random();
+                    Seed += Seed_Ramdom.Next(1000);//随机种子
+                }
+
+
+
+                //生成次级种子
+                Random Name_random = new Random(Seed + Time_s * i);
+                int randomIndex = Name_random.Next(NameLines.Length);//生成一个随机数，并对应到数组里的内容
+                Lucky = NameLines[randomIndex];
+
+                //关闭允许重复时执行
+                if (Can_reName != true)
+                {
+                    //
+                    for (int j = 1; j <= i; j++)
+                    {
+
+                        while (Lucky == HaveNamed[j])
+                        {
+                            randomIndex = Name_random.Next(NameLines.Length);//生成一个随机数，并对应到数组里的内容
+                            Lucky = NameLines[randomIndex];
+                            Console.WriteLine(Lucky);
+                            j = 1;
+                        }
+
+
+                    }
+                    HaveNamed[i] = Lucky;
+                }
+
+
+
+                
+                LuckyName.Text += "\n" + Lucky + "";
+                LuckyName.Height += 20;
+                Console.WriteLine("(批量)幸运儿：" + Lucky);
+
+            }
+            
+            LuckyNameRoll.Height=LuckyName.Height;//同步滚动条与文本框高度
+            start_2.IsEnabled = true;//解锁按钮
+
+
+
+
+
+
+
+
+
+
+
+
+
+            return;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -396,6 +595,69 @@ namespace 班级点名器
             }
 
         }
+
+        //快速设定按钮
+        private void NameNum_3_Click(object sender, RoutedEventArgs e)
+        {
+            NameNumIn.Text = "3";
+            return;
+        }
+        private void NameNum_5_Click(object sender, RoutedEventArgs e)
+        {
+            NameNumIn.Text = "5";
+            return;
+        }
+        private void NameNum_8_Click(object sender, RoutedEventArgs e)
+        {
+            NameNumIn.Text = "8";
+            return;
+        }
+        private void NameNum_10_Click(object sender, RoutedEventArgs e)
+        {
+            NameNumIn.Text = "10";
+            return;
+        }
+        private void NameNum_15_Click(object sender, RoutedEventArgs e)
+        {
+            NameNumIn.Text = "15";
+            return;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
         //预览名单
