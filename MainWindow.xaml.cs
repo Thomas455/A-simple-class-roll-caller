@@ -381,7 +381,6 @@ namespace 班级点名器
                 }
 
 
-
                 
                 LuckyName.Text += "\n" + Lucky + "";
                 LuckyName.Height += 20;
