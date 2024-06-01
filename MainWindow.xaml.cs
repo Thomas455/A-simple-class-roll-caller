@@ -3,7 +3,7 @@
 //作者B站：
 //          逗比Thomas
 //
-//2025.5.25
+//2024.6.2
 //
 //
 //
@@ -16,7 +16,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -31,6 +30,7 @@ using OpenFileDialog = System.Windows.Forms.OpenFileDialog;
 using static System.Windows.Forms.LinkLabel;
 using System.Windows.Forms.DataVisualization.Charting;
 using System.Reflection;
+using System.Security.Cryptography;
 
 
 namespace 班级点名器
@@ -44,7 +44,49 @@ namespace 班级点名器
         string Temp_NamePath = Properties.Settings.Default.Save_NamePath;//读取已经储存的路径
         string Temp_NamePath_Time = Properties.Settings.Default.PathSettingTime;//读取已经储存的路径
         bool Can_start;
-        
+
+        //防重复变量
+        string[] Name_Called=new string[21];//应为14，预留7位
+        int Name_Called_Time=1;
+
+
+        //自制随机方法
+        public int Randompp(int n,int m)
+        {
+            //零号种子
+            int Seed0;
+            if (n == 0)
+            {
+                byte[] randomBytes = new byte[4];
+                RNGCryptoServiceProvider rngServiceProvider = new RNGCryptoServiceProvider();
+                rngServiceProvider.GetBytes(randomBytes);
+                int result = BitConverter.ToInt32(randomBytes, 0);
+                Random random = new Random(result);
+                Seed0 = random.Next();
+                Console.WriteLine(result);
+            }
+            else Seed0 = n;
+
+            int Ramdon_num = Seed0;
+            for (int i = 0; i <= m; i++)
+            {
+                Random random = new Random(Ramdon_num);
+
+                byte[] randomBytes = new byte[128];
+                RNGCryptoServiceProvider rngServiceProvider = new RNGCryptoServiceProvider();
+                rngServiceProvider.GetBytes(randomBytes);
+                Ramdon_num = BitConverter.ToInt32(randomBytes,random.Next(124));
+
+
+                
+
+            }
+            Console.WriteLine("调用Ramdonpp，循环：" + m);
+
+
+
+            return Ramdon_num;
+        }
 
 
 
@@ -200,19 +242,15 @@ namespace 班级点名器
             string Str_Time_s = DateTime.Now.ToString("ss");//获取秒
             int Time_s=int.Parse(Str_Time_s);//str to int
 
-            int Seed=0;
-            for (int i = 0;i<= 1000; i++)
-            {
-                Random Seed_Ramdom = new Random();
-                Seed += Seed_Ramdom.Next(1000);//随机种子
-            }
+            int Seed= Randompp(0,999);
+            
 
 
             //Console.WriteLine(Seed);
 
 
             Random Time_Random = new Random(Seed);
-            int RollTime = Time_Random.Next(10, 70);//生成一个随机数，用于决定名单随机循环次数
+            int RollTime = Time_Random.Next(40, 65);//生成一个随机数，用于决定名单随机循环次数
             
             
             start.IsEnabled = false;//锁定按钮
@@ -224,9 +262,32 @@ namespace 班级点名器
                 Lucky = NameLines[randomIndex];
                 Name.Content = Lucky;//切换文本框
 
-                await Task.Delay(750/RollTime);// 等待的延迟时间
+                await Task.Delay(500/RollTime);// 等待的延迟时间
 
             }
+            
+
+            //点名防重复
+            for (int j = 1; j <= Name_Called.Length-7; j++)
+            {
+
+                while (Lucky == Name_Called[j])//相同时再生成
+                {
+                    Console.WriteLine("__替换" + Lucky);
+                    Random Name_random = new Random(Randompp(Seed + Time_s,200));
+                    int randomIndex = Name_random.Next(NameLines.Length);//生成一个随机数，并对应到数组里的内容
+                    Lucky = NameLines[randomIndex];
+                    j = 1;//重新检查
+                    Name.Content = Lucky;
+                    
+                }
+
+
+            }
+            if (Name_Called_Time > Name_Called.Length-7) Name_Called_Time = 1;
+            Name_Called[Name_Called_Time] = Lucky;
+            Name_Called_Time++;
+
             Console.WriteLine("幸运儿：" + Lucky);
             start.IsEnabled = true;//解锁按钮
             return;
@@ -240,6 +301,12 @@ namespace 班级点名器
         private async void start_MoreName_Click(object sender, RoutedEventArgs e)
         {
 
+            if (Can_start == false)
+            {
+                System.Windows.MessageBox.Show("请先完成设置", "错误", MessageBoxButton.OK, MessageBoxImage.Warning);//弹出提示框
+                return;
+            }
+            File.Content = "当前使用的名单：" + Temp_NamePath + "    设定于:" + Temp_NamePath_Time;
 
 
 
@@ -346,17 +413,13 @@ namespace 班级点名器
             {
                 //点一次名
                 //获取种子
-                Seed = 0;
-                for (int j = 0; j <= 1000; j++)
-                {
-                    Random Seed_Ramdom = new Random();
-                    Seed += Seed_Ramdom.Next(1000);//随机种子
-                }
+                Seed = Randompp(0,999);
+                
 
 
 
                 //生成次级种子
-                Random Name_random = new Random(Seed + Time_s * i);
+                Random Name_random = new Random(Randompp(Seed + Time_s * i,200));
                 int randomIndex = Name_random.Next(NameLines.Length);//生成一个随机数，并对应到数组里的内容
                 Lucky = NameLines[randomIndex];
 
@@ -367,7 +430,7 @@ namespace 班级点名器
                     for (int j = 1; j <= i; j++)
                     {
 
-                        while (Lucky == HaveNamed[j])
+                        while (Lucky == HaveNamed[j])//相同时再生成
                         {
                             randomIndex = Name_random.Next(NameLines.Length);//生成一个随机数，并对应到数组里的内容
                             Lucky = NameLines[randomIndex];
@@ -384,6 +447,8 @@ namespace 班级点名器
                 
                 LuckyName.Text += "\n" + Lucky + "";
                 LuckyName.Height += 20;
+                LuckyNameRoll.Height += 22;
+                await Task.Delay(700 / NameNum);
                 Console.WriteLine("(批量)幸运儿：" + Lucky);
 
             }
@@ -393,60 +458,8 @@ namespace 班级点名器
 
 
 
-
-
-
-
-
-
-
-
-
-
             return;
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         //路径选择按钮事件
         private void GetPathButton_Click(object sender, RoutedEventArgs e)
@@ -621,42 +634,6 @@ namespace 班级点名器
             NameNumIn.Text = "15";
             return;
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
         //预览名单
