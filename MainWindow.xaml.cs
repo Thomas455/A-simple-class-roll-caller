@@ -75,10 +75,7 @@ namespace 班级点名器
                 byte[] randomBytes = new byte[128];
                 RNGCryptoServiceProvider rngServiceProvider = new RNGCryptoServiceProvider();
                 rngServiceProvider.GetBytes(randomBytes);
-                Ramdon_num = BitConverter.ToInt32(randomBytes,random.Next(124));
-
-
-                
+                Ramdon_num = BitConverter.ToInt32(randomBytes,random.Next(124));  
 
             }
             Console.WriteLine("调用Ramdonpp，循环：" + m);
@@ -678,6 +675,22 @@ namespace 班级点名器
 
             window.Owner = this;
             window.Show();
+            return;
+        }
+        private void TopMode_Click(object sender, RoutedEventArgs e)
+        {
+            if (Can_start == false)
+            {
+                System.Windows.MessageBox.Show("请先完成设置", "错误", MessageBoxButton.OK, MessageBoxImage.Warning);//弹出提示框
+                return;
+            }
+            var window = new TopModeWindow();
+
+            
+            window.Topmost = true;
+            window.Activate();
+            window.Show();
+            this.Close();
             return;
         }
     }

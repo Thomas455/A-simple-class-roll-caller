@@ -46,17 +46,27 @@
 
 						<Label Name="File" Margin="100,0,0,0" FontSize="10" HorizontalAlignment="Left" Width="660" Height="30" VerticalAlignment="Top">路径未设定</Label>
 
-						<Button Content="查看名单" Name="view" Margin="310,285,-10,0" Height="30" Width="100" HorizontalAlignment="Right" VerticalAlignment="Top" Click="View_Click"
+						<Button Content="查看名单" Name="view" Margin="310,275,-3,0" Height="30" Width="100" HorizontalAlignment="Right" VerticalAlignment="Top" Click="View_Click"
                                         FontSize="16" FontFamily="微软雅黑" Background="#FFE0E0E0" BorderThickness="2" Padding="0" Foreground="Black" BorderBrush="#BFC1C1C1" >
-							<Button.Resources>
-								<Style TargetType="{x:Type Border}">
-									<Setter Property="CornerRadius" Value="6"/>
-								</Style>
-							</Button.Resources>
+                            <Button.Resources>
+                                <Style TargetType="{x:Type Border}">
+                                    <Setter Property="CornerRadius" Value="6,0,0,0"/>
+                                </Style>
+                            </Button.Resources>
+                        </Button>
 
-						</Button>
+                        <Button Content="悬浮模式" Margin="310,305,-3,0" Height="30" Width="100" HorizontalAlignment="Right" VerticalAlignment="Top" Click="TopMode_Click"
+                                        FontSize="16" FontFamily="微软雅黑" Background="#FFE0E0E0" BorderThickness="2" Padding="0" Foreground="Black" BorderBrush="#BFC1C1C1" >
+                            <Button.Resources>
+                                <Style TargetType="{x:Type Border}">
+                                    <Setter Property="CornerRadius" Value="0,0,0,6"/>
+                                </Style>
+                            </Button.Resources>
+                        </Button>
 
-						<Label Name="VersionShow" Margin="0,0,10,0" Height="25" Width="60" HorizontalAlignment="Right" VerticalAlignment="Top" Loaded="GetVersion" Foreground="DarkGray" >未知版本</Label>
+
+
+                        <Label Name="VersionShow" Margin="0,0,10,0" Height="25" Width="60" HorizontalAlignment="Right" VerticalAlignment="Top" Loaded="GetVersion" Foreground="DarkGray" >未知版本</Label>
 
 
 

@@ -1,0 +1,52 @@
+﻿<Window x:Class="班级点名器.TopModeWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:班级点名器"
+        mc:Ignorable="d"
+        PreviewMouseLeftButtonDown="Window_PreviewMouseLeftButtonDown"
+        PreviewMouseMove="Window_PreviewMouseMove"
+        PreviewMouseLeftButtonUp="Window_PreviewMouseLeftButtonUp"
+        Title="点名器悬浮窗口" Height="100" Width="200"  MinHeight="100" MaxHeight="100" MinWidth="200" MaxWidth="200"
+        Background="Transparent" AllowsTransparency="True" WindowStyle="None" Loaded="Window_Loaded" >
+    <Grid>
+        <Viewbox>
+            <Grid>
+                <Border Name="border" Margin="0,0,0,0" Background="#FFE0E0E0" >
+                    <Border.Resources>
+                        <Style TargetType="{x:Type Border}">
+                            <Setter Property="CornerRadius" Value="8"/>
+                        </Style>
+                    </Border.Resources>
+                </Border>
+
+
+                <Button Content="点名" Name="start" Margin="10,10,25,10" Height="50" Width="75" Click="start_Click" IsEnabled="True" 
+        FontSize="20" FontFamily="微软雅黑" Background="#FFE0E0E0" BorderThickness="2" Padding="0" Foreground="Black" BorderBrush="#BFC1C1C1" FontWeight="Heavy">
+                <Button.Resources>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="CornerRadius" Value="8,0,0,8"/>
+                    </Style>
+                </Button.Resources>
+                <Button.Effect>
+                    <DropShadowEffect ShadowDepth="1" BlurRadius="2.5" Color="#FFB9B9B9"/>
+                </Button.Effect>
+                </Button>
+                <Button Content="关&#x0a;闭"  Margin="75,10,10,10" Height="50" Width="25" Click="Close_Click" IsEnabled="True"
+                     FontSize="13" FontFamily="微软雅黑" Background="#FFE0E0E0" BorderThickness="2" Padding="0" Foreground="Black" BorderBrush="#BFC1C1C1" FontWeight="Heavy">
+                    <Button.Resources>
+                        <Style TargetType="{x:Type Border}">
+                            <Setter Property="CornerRadius" Value="0,8,8,0"/>
+                        </Style>
+                    </Button.Resources>
+                    <Button.Effect>
+                        <DropShadowEffect ShadowDepth="1" BlurRadius="2.5" Color="#FFB9B9B9"/>
+                    </Button.Effect>
+                </Button>
+
+            </Grid>
+        </Viewbox>
+        
+    </Grid>
+</Window>
