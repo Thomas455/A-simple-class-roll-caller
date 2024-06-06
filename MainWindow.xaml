@@ -8,13 +8,21 @@
         Title="点名器" Height="450" Width="800" MinHeight="450" MinWidth="800"
         Loaded="Window_Loaded" Background="#FFE2E2E2" BorderBrush="#FF929292" Name="Window" >
 
+    
 
-	<Viewbox>
-		<Grid>
-			<!--标签页控件-->
-			<TabControl Margin="0,0,0,0" Background="White" BorderBrush="#FFD2D2D2" >
 
-				<TabItem Header="点名" Margin="-2,0,0,0" Width="60" Height="24" HorizontalAlignment="Left">
+    <Viewbox>
+        
+		<Grid Margin="0,0,0,0">
+            
+            
+            <!--标签页控件-->
+			<TabControl Margin="0,18,0,0" Background="White" BorderBrush="#FFD2D2D2" Height="390" 
+                        Name="MyTabControl">
+                
+
+                <TabItem Header="点名" Margin="-2,0,0,0" Width="60" Height="24" HorizontalAlignment="Left" 
+                         Name="TabItem1" Selector.IsSelected="True" IsEnabled="False" Opacity="0" >
 					<TabItem.Resources>
 						<Style TargetType="{x:Type Border}">
 							<Setter Property="CornerRadius" Value="5,0,0,0"/>
@@ -34,7 +42,7 @@
                                 FontSize="30" FontFamily="微软雅黑" Background="#FFE0E0E0" BorderThickness="2" Padding="0" Foreground="Black" BorderBrush="#BFC1C1C1" FontWeight="Heavy">
 							<Button.Resources>
 								<Style TargetType="{x:Type Border}">
-									<Setter Property="CornerRadius" Value="8"/>
+									<Setter Property="CornerRadius" Value="10"/>
 								</Style>
 							</Button.Resources>
 							<Button.Effect>
@@ -46,7 +54,7 @@
 
 						<Label Name="File" Margin="100,0,0,0" FontSize="10" HorizontalAlignment="Left" Width="660" Height="30" VerticalAlignment="Top">路径未设定</Label>
 
-						<Button Content="查看名单" Name="view" Margin="310,275,-3,0" Height="30" Width="100" HorizontalAlignment="Right" VerticalAlignment="Top" Click="View_Click"
+						<Button Content="查看名单" Name="view" Margin="310,275,-5,0" Height="30" Width="100" HorizontalAlignment="Right" VerticalAlignment="Top" Click="View_Click"
                                         FontSize="16" FontFamily="微软雅黑" Background="#FFE0E0E0" BorderThickness="2" Padding="0" Foreground="Black" BorderBrush="#BFC1C1C1" >
                             <Button.Resources>
                                 <Style TargetType="{x:Type Border}">
@@ -55,7 +63,7 @@
                             </Button.Resources>
                         </Button>
 
-                        <Button Content="悬浮模式" Margin="310,305,-3,0" Height="30" Width="100" HorizontalAlignment="Right" VerticalAlignment="Top" Click="TopMode_Click"
+                        <Button Content="悬浮模式" Margin="310,305,-5,0" Height="30" Width="100" HorizontalAlignment="Right" VerticalAlignment="Top" Click="TopMode_Click"
                                         FontSize="16" FontFamily="微软雅黑" Background="#FFE0E0E0" BorderThickness="2" Padding="0" Foreground="Black" BorderBrush="#BFC1C1C1" >
                             <Button.Resources>
                                 <Style TargetType="{x:Type Border}">
@@ -76,7 +84,8 @@
 
 				</TabItem>
 
-				<TabItem Header="批量点名" Margin="-2,0,0,0" Width="60" Height="24" HorizontalAlignment="Left">
+                <TabItem Header="批量点名" Margin="-2,0,0,0" Width="60" Height="24" HorizontalAlignment="Left" 
+                         Name="TabItem2" Selector.IsSelected="True" IsEnabled="False" Opacity="0">
 					<TabItem.Resources>
 						<Style TargetType="{x:Type Border}">
 							<Setter Property="CornerRadius" Value="0,0,0,0"/>
@@ -185,7 +194,8 @@
 
 				</TabItem>
 
-				<TabItem Header="点名设置" Margin="-2,0,0,0" Width="60" Height="24" HorizontalAlignment="Left">
+				<TabItem Header="点名设置" Margin="-2,0,0,0" Width="60" Height="24" HorizontalAlignment="Left" 
+                         Name="TabItem3" Selector.IsSelected="True" IsEnabled="False" Opacity="0">
 					<TabItem.Resources>
 						<Style TargetType="{x:Type Border}">
 							<Setter Property="CornerRadius" Value="0,5,0,0"/>
@@ -261,6 +271,41 @@
 				</TabItem>
 			</TabControl>
 
-		</Grid>
+            <Grid>
+                <Button Content="点名" Margin="0,10,190,0" Height="30" Width="80" HorizontalAlignment="Center" VerticalAlignment="Top" Click="TabItem1Button_Click"
+                 FontSize="16" FontFamily="微软雅黑" Background="White" BorderThickness="2" Padding="0" Foreground="Black" FontWeight="Heavy" BorderBrush="DarkGray"
+                        Name="TabItemButton1">
+                    <Button.Resources>
+                        <Style TargetType="{x:Type Border}">
+                            <Setter Property="CornerRadius" Value="10"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+
+                <Button Content="批量点名" Margin="0,10,0,0" Height="30" Width="80" HorizontalAlignment="Center" VerticalAlignment="Top" Click="TabItem2Button_Click"
+                 FontSize="16" FontFamily="微软雅黑" Background="White" BorderThickness="2" Padding="0" Foreground="Black" FontWeight="Normal" BorderBrush="WhiteSmoke" 
+                        Name="TabItemButton2">
+                    <Button.Resources>
+                        <Style TargetType="{x:Type Border}">
+                            <Setter Property="CornerRadius" Value="10"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+
+                <Button Content="点名设置" Margin="190,10,0,0" Height="30" Width="80" HorizontalAlignment="Center" VerticalAlignment="Top" Click="TabItem3Button_Click"
+                 FontSize="16" FontFamily="微软雅黑" Background="White" BorderThickness="2" Padding="0" Foreground="Black" FontWeight="Normal" BorderBrush="WhiteSmoke" 
+                        Name="TabItemButton3">
+                    <Button.Resources>
+                        <Style TargetType="{x:Type Border}">
+                            <Setter Property="CornerRadius" Value="10"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+
+
+            </Grid>
+
+        </Grid>
+        
 	</Viewbox>
 </Window >

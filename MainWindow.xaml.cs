@@ -46,6 +46,7 @@ namespace 班级点名器
         bool Can_start;
 
         //防重复变量
+        
         string[] Name_Called=new string[21];//应为14，预留7位
         int Name_Called_Time=1;
 
@@ -85,6 +86,7 @@ namespace 班级点名器
             return Ramdon_num;
         }
 
+        //检查方法
         public bool PathCheck(string path)
         {
             //检查配置文件中路径的合法性
@@ -193,6 +195,13 @@ namespace 班级点名器
             
 
             InitializeComponent();
+            this.Closed += MainWindow_Closed;
+        }
+
+        private void MainWindow_Closed(object sender, EventArgs e)
+        {
+            
+            return;
         }
 
         //获取版本号
@@ -210,6 +219,7 @@ namespace 班级点名器
         public void Window_Loaded(object sender, EventArgs e)
         {
             //程序初始化
+            
 
             //检查配置文件中路径的合法性
 
@@ -642,5 +652,47 @@ namespace 班级点名器
             this.Close();
             return;
         }
+
+
+        public void TabItemRestart()
+        {
+            TabItemButton1.FontWeight = FontWeights.Normal;
+            TabItemButton2.FontWeight = FontWeights.Normal;
+            TabItemButton3.FontWeight = FontWeights.Normal;
+
+            TabItemButton1.BorderBrush = Brushes.WhiteSmoke;
+            TabItemButton2.BorderBrush = Brushes.WhiteSmoke;
+            TabItemButton3.BorderBrush = Brushes.WhiteSmoke;
+            return;
+        }
+        //标签页切换按钮
+        private void TabItem1Button_Click(object sender, RoutedEventArgs e)
+        {
+            TabItemRestart();
+            MyTabControl.SelectedIndex = 0;
+            TabItemButton1.FontWeight = FontWeights.Heavy;
+            TabItemButton1.BorderBrush = Brushes.DarkGray;
+            return;
+        }
+        private void TabItem2Button_Click(object sender, RoutedEventArgs e)
+        {
+            TabItemRestart();
+            MyTabControl.SelectedIndex = 1;
+            TabItemButton2.FontWeight = FontWeights.Heavy;
+            TabItemButton2.BorderBrush = Brushes.DarkGray;
+            return;
+        }
+        private void TabItem3Button_Click(object sender, RoutedEventArgs e)
+        {
+            TabItemRestart();
+            MyTabControl.SelectedIndex = 2;
+            TabItemButton3.FontWeight = FontWeights.Heavy;
+            TabItemButton3.BorderBrush = Brushes.DarkGray;
+            return;
+        }
+
+        
+
+
     }
 }

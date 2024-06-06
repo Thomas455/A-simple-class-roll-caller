@@ -22,7 +22,8 @@ namespace 班级点名器
     public partial class TopModeWindow_StartWindow : Window
     {
         //全局变量
-        string Temp_NamePath = Properties.Settings.Default.Save_NamePath;//读取已经储存的路径
+        
+        //
         
 
         public TopModeWindow_StartWindow()
@@ -71,6 +72,8 @@ namespace 班级点名器
 
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            
+
             try
             {
                 this.Width = SystemParameters.PrimaryScreenWidth / 2;
@@ -86,7 +89,7 @@ namespace 班级点名器
             await Task.Delay(100);
 
             //读取名单
-            string FileNameToRead = @Temp_NamePath;
+            string FileNameToRead = @Properties.Settings.Default.Save_NamePath;
             //用文件里每一行的内容创建一个字符串数组
             string[] NameLines;
             try
@@ -145,9 +148,9 @@ namespace 班级点名器
 
             }
 
-            
-
-            Console.WriteLine("幸运儿：" + Lucky);
+            Lucky = Properties.Settings.Default.Temp;//替换原名字
+            Name.Content = Lucky;
+            //Console.WriteLine("幸运儿：" + Lucky);
             for (int i = 0; i < 3; i++)
             {
                 await Task.Delay(100);
@@ -155,9 +158,9 @@ namespace 班级点名器
                 await Task.Delay(300);
                 Name.Content=Lucky;
             }
-            await Task.Delay(2000);
+            
 
-            this.Close();
+            
 
             return;
         }
