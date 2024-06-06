@@ -3,7 +3,7 @@
 //作者B站：
 //          逗比Thomas
 //
-//2024.6.2
+//2024.6.6
 //
 //
 //
@@ -85,7 +85,108 @@ namespace 班级点名器
             return Ramdon_num;
         }
 
+        public bool PathCheck(string path)
+        {
+            //检查配置文件中路径的合法性
 
+            //空白检测
+            if (path == "")
+            {
+                File.Content = "路径未设定";
+                Name.Content = "请设置点名";
+                Can_start = false;
+                Console.WriteLine("路径为空！");
+                
+                return false;//如果没有设定，就退出检查
+            }
+
+            //冒号检测
+            if (path.Contains("\"") == true)
+            {
+                Console.WriteLine("文件读取错误: 不能有冒号");
+                System.Windows.MessageBox.Show("文件读取错误: 不能有冒号！，已经重置设置", "错误", MessageBoxButton.OK, MessageBoxImage.Warning);//弹出提示框
+                NamePath.Text = "";//重置文本框
+                path= string.Empty;
+                Temp_NamePath_Time = string.Empty;
+                Properties.Settings.Default.Save_NamePath = path;
+                Properties.Settings.Default.PathSettingTime = Temp_NamePath_Time;
+                Properties.Settings.Default.Save();//重置所有保存的内容
+                File.Content = "路径未设定";
+                Name.Content = "请设置点名";
+                Can_start = false;
+                return false;//退出
+
+            }
+
+            //后缀检测
+            string extension;
+            try
+            {
+                extension = System.IO.Path.GetExtension(path);
+            }
+            catch (IOException error)
+            {
+                // 处理文件读取时可能出现的异常，例如文件不存在、没有读取权限等
+                Console.WriteLine("文件读取错误: " + error.Message);
+                System.Windows.MessageBox.Show("文件读取错误: " + error.Message, "后缀错误", MessageBoxButton.OK, MessageBoxImage.Error);//弹出提示框
+                System.Windows.MessageBox.Show("先前设定的路径\"" + path + "\"似乎不是一个合法的路径，已经重置设置");//弹出提示框
+                NamePath.Text = "";//重置文本框
+                path = string.Empty;
+                Temp_NamePath_Time = string.Empty;
+                Properties.Settings.Default.Save_NamePath = path;
+                Properties.Settings.Default.PathSettingTime = Temp_NamePath_Time;
+                Properties.Settings.Default.Save();//重置所有保存的内容
+                File.Content = "路径未设定";
+                Name.Content = "请设置点名";
+                Can_start = false;
+                return false;
+            }
+
+            extension = System.IO.Path.GetExtension(path);
+            if (extension == ".txt")
+            {
+                NamePath.Text = path;//若路径合法，则自动设定这个路径
+                File.Content = "当前使用的名单：" + path + "    设定于:" + Temp_NamePath_Time;
+                Name.Content = "点名已就绪";
+                Can_start = true;
+            }
+            else
+            {
+                System.Windows.MessageBox.Show("设定的路径\"" + path + "\"似乎不是一个合法的路径，已经重置设置", "路径错误", MessageBoxButton.OK, MessageBoxImage.Warning);//弹出提示框
+                NamePath.Text = "";//重置文本框
+                path = string.Empty;
+                Temp_NamePath_Time = string.Empty;
+                Properties.Settings.Default.Save_NamePath = path;
+                Properties.Settings.Default.PathSettingTime = Temp_NamePath_Time;
+                Properties.Settings.Default.Save();//重置所有保存的内容
+                File.Content = "路径未设定";
+                Name.Content = "请设置点名";
+                Can_start = false;
+                return false;
+            }
+            try
+            {
+                // 读取文件的所有行，并将它们存储到字符串数组中
+                String[] NameLines = System.IO.File.ReadAllLines(path);
+
+                // 遍历数组并输出每一行的内容
+                Console.WriteLine("当前名单:");
+                foreach (string line in NameLines)
+                {
+                    Console.WriteLine(line);
+                }
+            }
+            catch (IOException error)
+            {
+                // 处理文件读取时可能出现的异常，例如文件不存在、没有读取权限等
+                Console.WriteLine("文件读取错误: " + error.Message);
+                System.Windows.MessageBox.Show("文件读取错误: " + error.Message, "路径错误", MessageBoxButton.OK, MessageBoxImage.Warning);//弹出提示框
+                Can_start = false;
+                return false;
+            }
+            return true;
+
+        }
 
         public MainWindow()
         {
@@ -112,80 +213,7 @@ namespace 班级点名器
 
             //检查配置文件中路径的合法性
 
-            //冒号检测
-            if (Temp_NamePath.Contains("\"") == true)
-            {
-                Console.WriteLine("文件读取错误: 不能有冒号");
-                System.Windows.MessageBox.Show("文件读取错误: 不能有冒号！，已经重置设置","错误", MessageBoxButton.OK, MessageBoxImage.Warning);//弹出提示框
-                NamePath.Text = "";//重置文本框
-                Temp_NamePath = string.Empty;
-                Temp_NamePath_Time = string.Empty;
-                Properties.Settings.Default.Save_NamePath = Temp_NamePath;
-                Properties.Settings.Default.PathSettingTime = Temp_NamePath_Time;
-                Properties.Settings.Default.Save();//重置所有保存的内容
-                File.Content = "路径未设定";
-                Name.Content = "请设置点名";
-                Can_start = false;
-                return;//退出
-
-            }
-
-            //空白检测
-            if (Temp_NamePath == "")
-            {
-                File.Content = "路径未设定";
-                Name.Content = "请设置点名";
-                Can_start = false;
-                return;//如果没有设定，就退出检查
-            }
-
-
-            //后缀检测
-            string extension;
-            try
-            {
-                extension = System.IO.Path.GetExtension(Temp_NamePath);
-            }
-            catch (IOException error)
-            {
-                // 处理文件读取时可能出现的异常，例如文件不存在、没有读取权限等
-                Console.WriteLine("文件读取错误: " + error.Message);
-                System.Windows.MessageBox.Show("文件读取错误: " + error.Message,"后缀错误",MessageBoxButton.OK, MessageBoxImage.Error);//弹出提示框
-                System.Windows.MessageBox.Show("先前设定的路径" + Temp_NamePath + "似乎不是一个合法的路径，已经重置设置");//弹出提示框
-                NamePath.Text = "";//重置文本框
-                Temp_NamePath = string.Empty;
-                Temp_NamePath_Time = string.Empty;
-                Properties.Settings.Default.Save_NamePath = Temp_NamePath;
-                Properties.Settings.Default.PathSettingTime = Temp_NamePath_Time;
-                Properties.Settings.Default.Save();//重置所有保存的内容
-                File.Content = "路径未设定";
-                Name.Content = "请设置点名";
-                Can_start = false;
-                return;
-            }
-
-            extension = System.IO.Path.GetExtension(Temp_NamePath);
-            if (extension == ".txt")
-            {
-                NamePath.Text = Temp_NamePath;//若路径合法，则自动设定这个路径
-                File.Content = "当前使用的名单：" + Temp_NamePath + "    设定于:" + Temp_NamePath_Time;
-                Name.Content = "点名已就绪";
-                Can_start= true;
-            }
-            else
-            {
-                System.Windows.MessageBox.Show("先前设定的路径" + Temp_NamePath + "似乎不是一个合法的路径，已经重置设置","路径错误", MessageBoxButton.OK, MessageBoxImage.Warning);//弹出提示框
-                NamePath.Text = "";//重置文本框
-                Temp_NamePath = string.Empty;
-                Temp_NamePath_Time = string.Empty;
-                Properties.Settings.Default.Save_NamePath = Temp_NamePath;
-                Properties.Settings.Default.PathSettingTime = Temp_NamePath_Time;
-                Properties.Settings.Default.Save();//重置所有保存的内容
-                File.Content = "路径未设定";
-                Name.Content = "请设置点名";
-                Can_start = false;
-                return;
-            }
+            PathCheck(Temp_NamePath);
             return;
         }
 
@@ -503,106 +531,27 @@ namespace 班级点名器
             //保存设定名单的时间
             string Time= DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");//获取时间
             Temp_NamePath_Time = Time;//保存至全局变量
-            
+
 
             //以上路径的合法性
-            string extension;
-            if(Temp_NamePath.Contains("\"")==true)
-            {
-                Console.WriteLine("文件读取错误: 不能有冒号");
-                System.Windows.MessageBox.Show("文件读取错误: 不能有冒号！，已经重置设置", "错误", MessageBoxButton.OK, MessageBoxImage.Warning);//弹出提示框
-                NamePath.Text = "";//重置文本框
-                Temp_NamePath = string.Empty;
-                Temp_NamePath_Time = string.Empty;
-                Properties.Settings.Default.Save_NamePath = Temp_NamePath;
-                Properties.Settings.Default.PathSettingTime = Temp_NamePath_Time;
-                Properties.Settings.Default.Save();//重置所有保存的内容
-                File.Content = "路径未设定";
-                Name.Content = "请设置点名";
-                Can_start = false;
-                return;//退出
-
-            }
+            if (PathCheck(Temp_NamePath) == false) return;
 
 
-            try
-            {
-                extension = System.IO.Path.GetExtension(Temp_NamePath);
-            }
-            catch (IOException error)
-            {
-                // 处理文件读取时可能出现的异常，例如文件不存在、没有读取权限等
-                Console.WriteLine("文件读取错误: " + error.Message);
-                System.Windows.MessageBox.Show("文件读取错误: " + error.Message);//弹出提示框
-                System.Windows.MessageBox.Show("先前设定的路径" + Temp_NamePath + "似乎不是一个合法的路径，已经重置设置","路径错误",MessageBoxButton.OK, MessageBoxImage.Warning);//弹出提示框
-                NamePath.Text = "";//重置文本框
-                Temp_NamePath = string.Empty;
-                Temp_NamePath_Time = string.Empty;
-                Properties.Settings.Default.Save_NamePath = Temp_NamePath;
-                Properties.Settings.Default.PathSettingTime = Temp_NamePath_Time;
-                Properties.Settings.Default.Save();//重置所有保存的内容
-                File.Content = "路径未设定";
-                Name.Content = "请设置点名";
-                Can_start = false;
-                return;//退出
-            }
-            extension = System.IO.Path.GetExtension(Temp_NamePath);
-            
-            if (extension == ".txt")
-            {
-                //尝试读
-                try
-                {
-                    // 读取文件的所有行，并将它们存储到字符串数组中
-                    String[] NameLines = System.IO.File.ReadAllLines(Temp_NamePath);
-
-                    // 遍历数组并输出每一行的内容
-                    Console.WriteLine("当前名单:");
-                    foreach (string line in NameLines)
-                    {
-                        Console.WriteLine(line);
-                    }
-                }
-                catch (IOException error)
-                {
-                    // 处理文件读取时可能出现的异常，例如文件不存在、没有读取权限等
-                    Console.WriteLine("文件读取错误: " + error.Message);
-                    System.Windows.MessageBox.Show("文件读取错误: " + error.Message, "路径错误", MessageBoxButton.OK, MessageBoxImage.Warning);//弹出提示框
-                    Can_start = false;
-                    return;
-                }
-
-                //设定路径
-                //保存配置
-                Properties.Settings.Default.Save_NamePath = Temp_NamePath;
-                Properties.Settings.Default.Save();//保存文件路径至配置文件
-                Properties.Settings.Default.PathSettingTime = Time;
-                Properties.Settings.Default.Save();//保存设定名单的时间至配置文件
+            //设定路径
+            //保存配置
+            Properties.Settings.Default.Save_NamePath = Temp_NamePath;
+            Properties.Settings.Default.Save();//保存文件路径至配置文件
+            Properties.Settings.Default.PathSettingTime = Time;
+            Properties.Settings.Default.Save();//保存设定名单的时间至配置文件
 
 
 
-                NamePath.Text = Temp_NamePath;//若路径合法，则自动设定这个路径
-                File.Content = "当前使用的名单：" + Temp_NamePath + "    设定于:" + Temp_NamePath_Time;
-                Name.Content = "点名已就绪";
-                Can_start = true;
-                System.Windows.MessageBox.Show("设定成功！","提示");//弹出提示框
-                start.IsEnabled = true;//解锁按钮
-            }
-            else
-            {
-                System.Windows.MessageBox.Show(Temp_NamePath + "似乎不是一个合法的路径，已经重置设置", "路径错误", MessageBoxButton.OK, MessageBoxImage.Warning);//弹出提示框
-                NamePath.Text = "";//重置文本框
-                Temp_NamePath = string.Empty;
-                Temp_NamePath_Time = string.Empty;//清空变量
-                Properties.Settings.Default.Save_NamePath = Temp_NamePath;
-                Properties.Settings.Default.PathSettingTime = Time;
-                Properties.Settings.Default.Save();//保存设定
-                File.Content = "路径未设定";
-                Name.Content = "请设置点名";
-                Can_start = false;
-                return;
-            }
-
+            NamePath.Text = Temp_NamePath;//若路径合法，则自动设定这个路径
+            File.Content = "当前使用的名单：" + Temp_NamePath + "    设定于:" + Temp_NamePath_Time;
+            Name.Content = "点名已就绪";
+            Can_start = true;
+            System.Windows.MessageBox.Show("设定成功！", "提示");//弹出提示框
+            start.IsEnabled = true;//解锁按钮
         }
 
         //快速设定按钮
