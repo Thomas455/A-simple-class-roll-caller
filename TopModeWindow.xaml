@@ -7,24 +7,31 @@
         xmlns:local="clr-namespace:班级点名器"
         mc:Ignorable="d"
         PreviewMouseLeftButtonDown="Window_PreviewMouseLeftButtonDown"
-        PreviewMouseMove="Window_PreviewMouseMove"
         PreviewMouseLeftButtonUp="Window_PreviewMouseLeftButtonUp"
-        Title="点名器悬浮窗口" Height="100" Width="200"  MinHeight="100" MaxHeight="100" MinWidth="200" MaxWidth="200"
-        Background="Transparent" AllowsTransparency="True" WindowStyle="None" Loaded="Window_Loaded" >
+        PreviewMouseRightButtonDown="Window_PreviewMouseRightButtonDown"
+        PreviewMouseRightButtonUp="Window_PreviewMouseRightButtonUp"
+        
+        
+        PreviewMouseMove="Window_PreviewMouseMove"
+        
+        Title="点名器悬浮窗口" Height="120" Width="250"  MinHeight="120" MaxHeight="120" MinWidth="250" MaxWidth="250"
+        Background="Transparent" AllowsTransparency="True" WindowStyle="None" Loaded="Window_Loaded"  >
+
+
     <Grid>
         <Viewbox>
             <Grid>
-                <Border Name="border" Margin="0,0,0,0" Background="#FFE0E0E0" >
+                <Border Name="border" Margin="0,0,0,0" Background="#FFE0E0E0" BorderThickness="3" BorderBrush="White">
                     <Border.Resources>
                         <Style TargetType="{x:Type Border}">
-                            <Setter Property="CornerRadius" Value="8"/>
+                            <Setter Property="CornerRadius" Value="6"/>
                         </Style>
                     </Border.Resources>
                 </Border>
 
 
                 <Button Content="点名" Name="start" Margin="10,10,25,10" Height="50" Width="75" Click="start_Click" IsEnabled="True" 
-        FontSize="20" FontFamily="微软雅黑" Background="#FFE0E0E0" BorderThickness="2" Padding="0" Foreground="Black" BorderBrush="#BFC1C1C1" FontWeight="Heavy">
+        FontSize="20" FontFamily="微软雅黑" Background="#FFE0E0E0"  Padding="0" Foreground="Black" BorderThickness="2" BorderBrush="#BAC1C1C1" FontWeight="Heavy">
                 <Button.Resources>
                     <Style TargetType="{x:Type Border}">
                         <Setter Property="CornerRadius" Value="8,0,0,8"/>

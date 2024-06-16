@@ -26,7 +26,7 @@ namespace 班级点名器
         int Name_Called_Time = 1;
 
 
-        Point pressedPosition;
+        Point pressedPosition;//鼠标位置
         bool isDragMoved = false;
 
         //自制随机方法
@@ -170,10 +170,12 @@ namespace 班级点名器
         //获取点击坐标
         void Window_PreviewMouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            pressedPosition = e.GetPosition(this);
-            
+            pressedPosition = e.GetPosition(this);//获取按下鼠标位置
+            Console.WriteLine("LeftButtonDown"+pressedPosition.ToString());
+            return;
         }
 
+        
 
         void Window_PreviewMouseMove(object sender, System.Windows.Input.MouseEventArgs e)
         {
@@ -182,6 +184,7 @@ namespace 班级点名器
                 isDragMoved = true;
                 DragMove();
             }
+            return ;
         }
 
         //抬起鼠标时
@@ -192,6 +195,19 @@ namespace 班级点名器
                 isDragMoved = false;
                 e.Handled = true;
             }
+            return;
+        }
+
+        private void Window_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+
+            return ;
+        }
+
+        private void Window_PreviewMouseRightButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            
+            return;
         }
 
 

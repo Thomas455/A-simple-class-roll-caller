@@ -480,10 +480,12 @@ namespace 班级点名器
 
 
                 
-                LuckyName.Text += "\n" + Lucky + "";
+                LuckyName.Text += "" + Lucky + "\n";
                 LuckyName.Height += 20;
                 LuckyNameRoll.Height += 22;
-                await Task.Delay(700 / NameNum);
+                LuckyNameRoll.Height = LuckyName.Height;//同步滚动条与文本框高度
+                if (NameNum > 10) await Task.Delay(700 / NameNum);
+                if (NameNum <= 10) await Task.Delay(80);
                 Console.WriteLine("(批量)幸运儿：" + Lucky);
 
             }
