@@ -21,48 +21,13 @@ namespace 班级点名器
     /// </summary>
     public partial class TopModeWindow : Window
     {
-        //防止重复
-        string[] Name_Called = new string[21];//应为14，预留7位
-        int Name_Called_Time = 1;
+        
 
 
         Point pressedPosition;//鼠标位置
         bool isDragMoved = false;
 
-        //自制随机方法
-        public int Randompp(int n, int m)
-        {
-            //零号种子
-            int Seed0;
-            if (n == 0)
-            {
-                byte[] randomBytes = new byte[4];
-                RNGCryptoServiceProvider rngServiceProvider = new RNGCryptoServiceProvider();
-                rngServiceProvider.GetBytes(randomBytes);
-                int result = BitConverter.ToInt32(randomBytes, 0);
-                Random random = new Random(result);
-                Seed0 = random.Next();
-                Console.WriteLine(result);
-            }
-            else Seed0 = n;
-
-            int Ramdon_num = Seed0;
-            for (int i = 0; i <= m; i++)
-            {
-                Random random = new Random(Ramdon_num);
-
-                byte[] randomBytes = new byte[128];
-                RNGCryptoServiceProvider rngServiceProvider = new RNGCryptoServiceProvider();
-                rngServiceProvider.GetBytes(randomBytes);
-                Ramdon_num = BitConverter.ToInt32(randomBytes, random.Next(124));
-
-            }
-            Console.WriteLine("调用Ramdonpp，循环：" + m);
-
-
-
-            return Ramdon_num;
-        }
+        
 
         //检查方法
         public bool TopWindowPathCheck(string path)
@@ -258,7 +223,7 @@ namespace 班级点名器
             string Str_Time_s = DateTime.Now.ToString("ss");//获取秒
             int Time_s = int.Parse(Str_Time_s);//str to int
 
-            int Seed = Randompp(0, 999);
+            int Seed = RollCaller.Randompp(0, 999);
 
 
 
@@ -271,13 +236,13 @@ namespace 班级点名器
             //Console.WriteLine("幸运儿："+Lucky);
 
             //点名防重复
-            for (int j = 1; j <= Name_Called.Length - 7; j++)
+            for (int j = 1; j <= RollCaller.Name_Called.Length - 7; j++)
             {
 
-                while (Lucky == Name_Called[j])//相同时再生成
+                while (Lucky == RollCaller.Name_Called[j])//相同时再生成
                 {
                     Console.WriteLine("__替换" + Lucky);
-                    Name_random = new Random(Randompp(Seed + Time_s, 200));
+                    Name_random = new Random(RollCaller.Randompp(Seed + Time_s, 200));
                     randomIndex = Name_random.Next(NameLines.Length);//生成一个随机数，并对应到数组里的内容
                     Lucky = NameLines[randomIndex];
                     j = 1;//重新检查
@@ -288,13 +253,13 @@ namespace 班级点名器
 
             }
             Console.WriteLine("幸运儿：" + Lucky);
-            if (Name_Called_Time > Name_Called.Length - 7) Name_Called_Time = 1;
-            Name_Called[Name_Called_Time] = Lucky;
-            Name_Called_Time++;
+            if (RollCaller.Name_Called_Time > RollCaller.Name_Called.Length - 7) RollCaller.Name_Called_Time = 1;
+            RollCaller.Name_Called[RollCaller.Name_Called_Time] = Lucky;
+            RollCaller.Name_Called_Time++;
 
             //准备发送至新窗口
-            Properties.Settings.Default.Temp = Lucky;
-            Properties.Settings.Default.Save();
+            RollCaller.StrTemp = Lucky;
+            
 
 
             //打开窗口

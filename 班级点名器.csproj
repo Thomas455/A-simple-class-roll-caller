@@ -108,6 +108,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="RollCaller Class.cs" />
     <Compile Include="infoWindow.xaml.cs">
       <DependentUpon>infoWindow.xaml</DependentUpon>
     </Compile>

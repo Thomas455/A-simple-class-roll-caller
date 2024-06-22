@@ -31,40 +31,7 @@ namespace 班级点名器
             InitializeComponent();
         }
 
-        //自制随机方法
-        public int Randompp(int n, int m)
-        {
-            //零号种子
-            int Seed0;
-            if (n == 0)
-            {
-                byte[] randomBytes = new byte[4];
-                RNGCryptoServiceProvider rngServiceProvider = new RNGCryptoServiceProvider();
-                rngServiceProvider.GetBytes(randomBytes);
-                int result = BitConverter.ToInt32(randomBytes, 0);
-                Random random = new Random(result);
-                Seed0 = random.Next();
-                Console.WriteLine(result);
-            }
-            else Seed0 = n;
-
-            int Ramdon_num = Seed0;
-            for (int i = 0; i <= m; i++)
-            {
-                Random random = new Random(Ramdon_num);
-
-                byte[] randomBytes = new byte[128];
-                RNGCryptoServiceProvider rngServiceProvider = new RNGCryptoServiceProvider();
-                rngServiceProvider.GetBytes(randomBytes);
-                Ramdon_num = BitConverter.ToInt32(randomBytes, random.Next(124));
-
-            }
-            Console.WriteLine("调用Ramdonpp，循环：" + m);
-
-
-
-            return Ramdon_num;
-        }
+        
 
 
 
@@ -124,7 +91,7 @@ namespace 班级点名器
             string Str_Time_s = DateTime.Now.ToString("ss");//获取秒
             int Time_s = int.Parse(Str_Time_s);//str to int
 
-            int Seed = Randompp(0, 999);
+            int Seed = RollCaller.Randompp(0, 999);
 
 
 
@@ -148,7 +115,7 @@ namespace 班级点名器
 
             }
 
-            Lucky = Properties.Settings.Default.Temp;//替换原名字
+            Lucky = RollCaller.StrTemp;//替换原名字
             Name.Content = Lucky;
             //Console.WriteLine("幸运儿：" + Lucky);
             for (int i = 0; i < 3; i++)

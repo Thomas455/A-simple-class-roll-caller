@@ -46,17 +46,5 @@ namespace 班级点名器.Properties {
                 this["PathSettingTime"] = value;
             }
         }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string Temp {
-            get {
-                return ((string)(this["Temp"]));
-            }
-            set {
-                this["Temp"] = value;
-            }
-        }
     }
 }
