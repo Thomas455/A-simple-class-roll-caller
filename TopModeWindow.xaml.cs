@@ -242,7 +242,7 @@ namespace 班级点名器
                 while (Lucky == RollCaller.Name_Called[j])//相同时再生成
                 {
                     Console.WriteLine("__替换" + Lucky);
-                    Name_random = new Random(RollCaller.Randompp(Seed + Time_s, 200));
+                    Name_random = new Random(RollCaller.Randompp(0, 200));
                     randomIndex = Name_random.Next(NameLines.Length);//生成一个随机数，并对应到数组里的内容
                     Lucky = NameLines[randomIndex];
                     j = 1;//重新检查
@@ -252,6 +252,7 @@ namespace 班级点名器
 
 
             }
+
             Console.WriteLine("幸运儿：" + Lucky);
             if (RollCaller.Name_Called_Time > RollCaller.Name_Called.Length - 7) RollCaller.Name_Called_Time = 1;
             RollCaller.Name_Called[RollCaller.Name_Called_Time] = Lucky;

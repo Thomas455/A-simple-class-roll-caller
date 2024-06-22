@@ -40,7 +40,7 @@ namespace 班级点名器
             {
 
                 Random random = new Random(Random_num);
-                Random_num = random.Next(int.MaxValue);
+                Random_num = random.Next(int.MaxValue - 1);
 
 
             }
