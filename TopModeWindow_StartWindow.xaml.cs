@@ -117,6 +117,7 @@ namespace 班级点名器
 
             Lucky = RollCaller.StrTemp;//替换原名字
             Name.Content = Lucky;
+            await Task.Delay(100);
             //Console.WriteLine("幸运儿：" + Lucky);
             for (int i = 0; i < 3; i++)
             {

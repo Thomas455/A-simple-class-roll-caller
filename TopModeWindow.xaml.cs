@@ -74,8 +74,7 @@ namespace 班级点名器
             }
 
             extension = System.IO.Path.GetExtension(path);
-            if (extension == ".txt") ;
-            else
+            if (extension != ".txt")
             {
                 System.Windows.MessageBox.Show("设定的路径\"" + path + "\"似乎不是一个合法的路径，已经重置设置", "路径错误", MessageBoxButton.OK, MessageBoxImage.Warning);//弹出提示框
                 path = string.Empty;
@@ -84,6 +83,8 @@ namespace 班级点名器
                 Properties.Settings.Default.Save();//重置所有保存的内容
                 return false;
             }
+            else
+                ;
             try
             {
                 // 读取文件的所有行，并将它们存储到字符串数组中
@@ -236,20 +237,22 @@ namespace 班级点名器
             //Console.WriteLine("幸运儿："+Lucky);
 
             //点名防重复
+            short ReCalled_time = 0;//再生成次数
             for (int j = 1; j <= RollCaller.Name_Called.Length - 7; j++)
             {
-
+                
                 while (Lucky == RollCaller.Name_Called[j])//相同时再生成
                 {
+                    ReCalled_time++;
                     Console.WriteLine("__替换" + Lucky);
                     Name_random = new Random(RollCaller.Randompp(0, 200));
                     randomIndex = Name_random.Next(NameLines.Length);//生成一个随机数，并对应到数组里的内容
                     Lucky = NameLines[randomIndex];
                     j = 1;//重新检查
-                    
 
+                    if (ReCalled_time > 15) break;
                 }
-
+                if(ReCalled_time > 15) break;
 
             }
 

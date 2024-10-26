@@ -31,6 +31,7 @@ using static System.Windows.Forms.LinkLabel;
 using System.Windows.Forms.DataVisualization.Charting;
 using System.Reflection;
 using System.Security.Cryptography;
+using System.Runtime.InteropServices;
 
 
 
@@ -267,23 +268,25 @@ namespace 班级点名器
                 await Task.Delay(500/RollTime);// 等待的延迟时间
 
             }
-            
+
 
             //点名防重复
+            short ReCalled_time = 0;//再生成次数
             for (int j = 1; j <= RollCaller.Name_Called.Length-7; j++)
             {
-
+                
                 while (Lucky == RollCaller.Name_Called[j])//相同时再生成
                 {
+                    ReCalled_time++;
                     Console.WriteLine("__替换" + Lucky);
                     Random Name_random = new Random(RollCaller.Randompp(0,200));
                     int randomIndex = Name_random.Next(NameLines.Length);//生成一个随机数，并对应到数组里的内容
                     Lucky = NameLines[randomIndex];
                     j = 1;//重新检查
                     Name.Content = Lucky;
-                    
+                    if (ReCalled_time > 15) break;
                 }
-
+                if (ReCalled_time > 15) break;
 
             }
             if (RollCaller.Name_Called_Time > RollCaller.Name_Called.Length-7) RollCaller.Name_Called_Time = 1;
@@ -486,7 +489,8 @@ namespace 班级点名器
                 Console.WriteLine("用户关闭"+dialogResult) ;
                 return;
             }
-            
+            System.Windows.MessageBoxResult Result = System.Windows.MessageBox.Show("是否设定当前路径为名单路径", "提示", MessageBoxButton.OKCancel, MessageBoxImage.Information);//弹出提示框
+            if (Result == System.Windows.MessageBoxResult.OK) SetButton_Click(sender,e);//如果点确定，设定名单
             return;
         }
 
@@ -502,7 +506,7 @@ namespace 班级点名器
 
 
         //设定路径按钮
-        private void SetButton_Click(object sender, RoutedEventArgs e)
+        public void SetButton_Click(object sender, RoutedEventArgs e)
         {
             Temp_NamePath = NamePath.Text;//获取文本框中路径
             
