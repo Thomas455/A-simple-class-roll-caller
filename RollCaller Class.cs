@@ -39,7 +39,7 @@ namespace 班级点名器
             for (int i = 0; i <= m; i++)
             {
 
-                Random random = new Random(Random_num);
+                Random random = new Random(Random_num + DateTime.Now.Second);
                 Random_num = random.Next(int.MaxValue - 1);
 
 

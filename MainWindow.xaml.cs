@@ -367,22 +367,18 @@ namespace 班级点名器
 
             //获取点名数量
             int NameNum=0;
-            String NameNum_str;
-            
-            try
-            {
-                
-                NameNum_str = NameNumIn.Text;
-                int.TryParse(NameNumIn.Text, out NameNum);//尝试转换str to int
-                
-            }
-            catch (IOException error)
-            {
-                Console.WriteLine("设定错误: " + error.Message);
-                System.Windows.MessageBox.Show("设定错误: " + error.Message+"点名数量应给是一个数字！", "设置错误", MessageBoxButton.OKCancel, MessageBoxImage.Warning);//弹出提示框
-                NameNumIn.Text= string.Empty;
+
+
+            if (!int.TryParse(NameNumIn.Text, out NameNum)) {
+                Console.WriteLine("批量点名设定错误" );
+                System.Windows.MessageBox.Show("设定错误: 点名数量应给是一个数字！", "设置错误", MessageBoxButton.OK, MessageBoxImage.Warning);//弹出提示框
+                NameNumIn.Text = string.Empty;
                 return;
+
             }
+            //尝试转换str to int
+
+            
 
             if (NameNum > 99)
             {
