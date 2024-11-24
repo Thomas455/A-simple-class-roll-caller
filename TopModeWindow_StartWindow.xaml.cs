@@ -96,14 +96,7 @@ namespace 班级点名器
 
 
             //Console.WriteLine(Seed);
-
-
-            Random Time_Random = new Random(Seed);
-            int RollTime = Time_Random.Next(40, 65);//生成一个随机数，用于决定名单随机循环次数
-
-
-            
-            for (int i = 0; i < RollTime; i++)//循环名单，抽取幸运儿
+            for (int i = 0; i < 40; i++)//循环名单，抽取幸运儿
             {
                 //点一次名
                 Random Name_random = new Random(Seed + Time_s * i);
@@ -111,7 +104,7 @@ namespace 班级点名器
                 Lucky = NameLines[randomIndex];
                 Name.Content = Lucky;//切换文本框
 
-                await Task.Delay(500 / RollTime);// 等待的延迟时间
+                await Task.Delay(10);// 等待的延迟时间
 
             }
 

@@ -230,7 +230,7 @@ namespace 班级点名器
 
             //Console.WriteLine(Seed);
 
-            Random Name_random = new Random(Seed + Time_s);
+            Random Name_random = new Random(Seed);
             int randomIndex = Name_random.Next(NameLines.Length);//生成一个随机数，并对应到数组里的内容
             Lucky = NameLines[randomIndex];
 

@@ -25,10 +25,10 @@ namespace 班级点名器
             int Seed0;
             if (n == 0)
             {
-                byte[] randomBytes = new byte[4];
+                byte[] randomBytes = new byte[DateTime.Now.Second+10];
                 RNGCryptoServiceProvider rngServiceProvider = new RNGCryptoServiceProvider();
                 rngServiceProvider.GetBytes(randomBytes);
-                int result = BitConverter.ToInt32(randomBytes, 0);
+                int result = BitConverter.ToInt32(randomBytes, DateTime.Now.Second);
                 Random random = new Random(result);
                 Seed0 = random.Next();
                 Console.WriteLine(result);
@@ -36,6 +36,10 @@ namespace 班级点名器
             else Seed0 = n;
 
             int Random_num = Seed0;
+            Random random2 = new Random(Random_num * Properties.Settings.Default.open_time/256);
+            Random_num = random2.Next(int.MaxValue - 1);
+            
+            /*
             for (int i = 0; i <= m; i++)
             {
 
@@ -44,6 +48,7 @@ namespace 班级点名器
 
 
             }
+            */
             Console.WriteLine("调用Ramdonpp，循环：" + m);
 
 

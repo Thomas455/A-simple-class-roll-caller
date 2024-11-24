@@ -187,6 +187,14 @@ namespace 班级点名器
         public void Window_Loaded(object sender, EventArgs e)
         {
             //程序初始化
+
+            if (Properties.Settings.Default.open_time <= 256) Properties.Settings.Default.open_time++;
+            else Properties.Settings.Default.open_time = 0;
+            
+            Properties.Settings.Default.Save();
+
+            
+            
             
 
             //检查配置文件中路径的合法性
@@ -239,17 +247,8 @@ namespace 班级点名器
             //随机点名部分
             //这一部分已经尝试做到高度随机了，让每个人都有机会被抽
             string Lucky = null;//被抽中的幸运儿
-
-            long Long_Tick = DateTime.Now.Ticks;//获取时间刻
-
-            string Str_Time_s = DateTime.Now.ToString("ss");//获取秒
-            int Time_s=int.Parse(Str_Time_s);//str to int
-
-            int Seed = RollCaller.Randompp(0, 999);
-            
-
-
-            //Console.WriteLine(Seed);
+            int Seed = RollCaller.Randompp(0, 999);//点名种子
+            Console.WriteLine("seed:" + Seed);
 
 
             Random Time_Random = new Random(Seed);
@@ -260,7 +259,7 @@ namespace 班级点名器
             for (int i = 0; i<RollTime; i++)//循环名单，抽取幸运儿
             {
                 //点一次名
-                Random Name_random = new Random(Seed + Time_s*i);
+                Random Name_random = new Random(Seed - RollTime + i);
                 int randomIndex = Name_random.Next(NameLines.Length);//生成一个随机数，并对应到数组里的内容
                 Lucky = NameLines[randomIndex];
                 Name.Content = Lucky;//切换文本框
