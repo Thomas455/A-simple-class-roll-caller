@@ -275,7 +275,7 @@ namespace 班级点名器
             for (int i = 0; i<RollTime; i++)//循环名单，抽取幸运儿
             {
                 //点一次名
-                int randomIndex = RollCaller.Randompp(NameLines.Length - 1);//生成一个随机数，并对应到数组里的内容
+                int randomIndex = RollCaller.Randompp(NameLines.Length) - 1;//生成一个随机数，并对应到数组里的内容
                 Lucky = NameLines[randomIndex];
                 Name.Content = Lucky;//切换文本框
 
@@ -293,7 +293,7 @@ namespace 班级点名器
                 {
                     ReCalled_time++;
                     Console.WriteLine("__替换" + Lucky);
-                    int randomIndex = RollCaller.Randompp(NameLines.Length - 1);//生成一个随机数，并对应到数组里的内容
+                    int randomIndex = RollCaller.Randompp(NameLines.Length) - 1;//生成一个随机数，并对应到数组里的内容
                     Lucky = NameLines[randomIndex];
                     j = 1;//重新检查
                     Name.Content = Lucky;
@@ -366,6 +366,7 @@ namespace 班级点名器
             string Str_Time_s = DateTime.Now.ToString("ss");//获取秒
             int Time_s = int.Parse(Str_Time_s);//str to int
 
+            int Seed = 0;
             /*随机算法
             for (int i = 0; i <= 1000; i++)
             {
@@ -426,8 +427,8 @@ namespace 班级点名器
             {
                 //点一次名
 
-                //生成次级种子
-                int randomIndex = RollCaller.Randompp(NameLines.Length - 1);//生成一个随机数，并对应到数组里的内容
+                //生成
+                int randomIndex = RollCaller.Randompp(NameLines.Length) -1;//生成一个随机数，并对应到数组里的内容
                 Lucky = NameLines[randomIndex];
 
                 //关闭允许重复时执行
@@ -439,7 +440,8 @@ namespace 班级点名器
 
                         while (Lucky == HaveNamed[j])//相同时再生成
                         {
-                            randomIndex = RollCaller.Randompp(NameLines.Length - 1);//生成一个随机数，并对应到数组里的内容
+                            randomIndex = RollCaller.Randompp(NameLines.Length) -1;//生成一个随机数，并对应到数组里的内容
+                            
                             Lucky = NameLines[randomIndex];
                             Console.WriteLine(Lucky);
                             j = 1;

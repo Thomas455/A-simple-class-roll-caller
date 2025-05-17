@@ -98,8 +98,8 @@ namespace 班级点名器
             for (int i = 0; i < 40; i++)//循环名单，抽取幸运儿
             {
                 //点一次名
-                int randomIndex = RollCaller.Randompp(NameLines.Length - 1);//生成一个随机数，并对应到数组里的内容
-                Lucky = NameLines[randomIndex];
+                int randomIndex = RollCaller.Randompp(NameLines.Length) - 1;//生成一个随机数，并对应到数组里的内容
+                Lucky = NameLines[randomIndex]; 
                 Name.Content = Lucky;//切换文本框
 
                 await Task.Delay(10);// 等待的延迟时间

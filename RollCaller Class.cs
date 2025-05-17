@@ -32,12 +32,10 @@ namespace 班级点名器
             byte[] randomBytes = new byte[512+4];
             RNGCryptoServiceProvider rngServiceProvider = new RNGCryptoServiceProvider();
             rngServiceProvider.GetBytes(randomBytes);
-            int result = BitConverter.ToInt32(randomBytes, Start_Value);
+            int result = Math.Abs(BitConverter.ToInt32(randomBytes, Start_Value));
             Random random = new Random(result);
             Console.WriteLine(result);
-            result= result % Max_Value;
-            if(result==0) result=Max_Value;
-            if(result < 0) result = -result;
+            result= (result % Max_Value) +1;
 
             return result;
         }
