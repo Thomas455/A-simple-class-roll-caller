@@ -13,47 +13,33 @@ namespace 班级点名器
     internal class RollCaller
     {
         //防重复
+        public static int Start_Value = 0;//启动随机数
         public static string[] Name_Called = new string[21];//应为14，预留7位
         public static int Name_Called_Time = 1;
         public static string StrTemp;
 
+        //随机数启动种子
+        public static void Start_RandomValue()
+        {
+            Random random = new Random();
+            Start_Value = random.Next(0, 512);
+            Console.WriteLine("随机数启动种子：" + Start_Value);
+        }
 
         //随机方法
-        public static int Randompp(int n, int m)
+        public static int Randompp(int Max_Value)
         {
-            //零号种子
-            int Seed0;
-            if (n == 0)
-            {
-                byte[] randomBytes = new byte[DateTime.Now.Second+10];
-                RNGCryptoServiceProvider rngServiceProvider = new RNGCryptoServiceProvider();
-                rngServiceProvider.GetBytes(randomBytes);
-                int result = BitConverter.ToInt32(randomBytes, DateTime.Now.Second);
-                Random random = new Random(result);
-                Seed0 = random.Next();
-                Console.WriteLine(result);
-            }
-            else Seed0 = n;
+            byte[] randomBytes = new byte[512+4];
+            RNGCryptoServiceProvider rngServiceProvider = new RNGCryptoServiceProvider();
+            rngServiceProvider.GetBytes(randomBytes);
+            int result = BitConverter.ToInt32(randomBytes, Start_Value);
+            Random random = new Random(result);
+            Console.WriteLine(result);
+            result= result % Max_Value;
+            if(result==0) result=Max_Value;
+            if(result < 0) result = -result;
 
-            int Random_num = Seed0;
-            Random random2 = new Random(Random_num * Properties.Settings.Default.open_time/256);
-            Random_num = random2.Next(int.MaxValue - 1);
-            
-            /*
-            for (int i = 0; i <= m; i++)
-            {
-
-                Random random = new Random(Random_num + DateTime.Now.Second);
-                Random_num = random.Next(int.MaxValue - 1);
-
-
-            }
-            */
-            Console.WriteLine("调用Ramdonpp，循环：" + m);
-
-
-
-            return Random_num;
+            return result;
         }
 
 

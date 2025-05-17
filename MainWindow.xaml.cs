@@ -32,6 +32,7 @@ using System.Windows.Forms.DataVisualization.Charting;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Runtime.InteropServices;
+using System.Text.Json;
 
 
 
@@ -168,7 +169,13 @@ namespace 班级点名器
 
         private void MainWindow_Closed(object sender, EventArgs e)
         {
+
+            //保存点名历史
+            string Name_Called_Json = JsonSerializer.Serialize(RollCaller.Name_Called);//To str
+            Properties.Settings.Default.Name_Called = Name_Called_Json;//保存
+            Properties.Settings.Default.Save();
             
+
             return;
         }
 
@@ -193,9 +200,20 @@ namespace 班级点名器
             
             Properties.Settings.Default.Save();
 
+            //生成启动随机种子
+            RollCaller.Start_RandomValue();
+
+            //从储存中加载点名历史结果
+            if(Properties.Settings.Default.Name_Called==string.Empty) Console.WriteLine("没有点名历史");
+            else
+            {
+                RollCaller.Name_Called = JsonSerializer.Deserialize<string[]>(Properties.Settings.Default.Name_Called);
+                Console.WriteLine("读取点名历史");
+            }
             
             
-            
+
+
 
             //检查配置文件中路径的合法性
 
@@ -247,11 +265,9 @@ namespace 班级点名器
             //随机点名部分
             //这一部分已经尝试做到高度随机了，让每个人都有机会被抽
             string Lucky = null;//被抽中的幸运儿
-            int Seed = RollCaller.Randompp(0, 999);//点名种子
-            Console.WriteLine("seed:" + Seed);
 
 
-            Random Time_Random = new Random(Seed);
+            Random Time_Random = new Random();
             int RollTime = Time_Random.Next(40, 65);//生成一个随机数，用于决定名单随机循环次数
             
             
@@ -259,8 +275,7 @@ namespace 班级点名器
             for (int i = 0; i<RollTime; i++)//循环名单，抽取幸运儿
             {
                 //点一次名
-                Random Name_random = new Random(Seed - RollTime + i);
-                int randomIndex = Name_random.Next(NameLines.Length);//生成一个随机数，并对应到数组里的内容
+                int randomIndex = RollCaller.Randompp(NameLines.Length - 1);//生成一个随机数，并对应到数组里的内容
                 Lucky = NameLines[randomIndex];
                 Name.Content = Lucky;//切换文本框
 
@@ -278,8 +293,7 @@ namespace 班级点名器
                 {
                     ReCalled_time++;
                     Console.WriteLine("__替换" + Lucky);
-                    Random Name_random = new Random(RollCaller.Randompp(0,200));
-                    int randomIndex = Name_random.Next(NameLines.Length);//生成一个随机数，并对应到数组里的内容
+                    int randomIndex = RollCaller.Randompp(NameLines.Length - 1);//生成一个随机数，并对应到数组里的内容
                     Lucky = NameLines[randomIndex];
                     j = 1;//重新检查
                     Name.Content = Lucky;
@@ -352,7 +366,6 @@ namespace 班级点名器
             string Str_Time_s = DateTime.Now.ToString("ss");//获取秒
             int Time_s = int.Parse(Str_Time_s);//str to int
 
-            int Seed = 0;
             /*随机算法
             for (int i = 0; i <= 1000; i++)
             {
@@ -412,15 +425,9 @@ namespace 班级点名器
             for (int i = 1; i <= NameNum; i++)//循环名单，抽取幸运儿
             {
                 //点一次名
-                //获取种子
-                Seed = RollCaller.Randompp(0,999);
-                
-
-
 
                 //生成次级种子
-                Random Name_random = new Random(RollCaller.Randompp(Seed + Time_s * i,200));
-                int randomIndex = Name_random.Next(NameLines.Length);//生成一个随机数，并对应到数组里的内容
+                int randomIndex = RollCaller.Randompp(NameLines.Length - 1);//生成一个随机数，并对应到数组里的内容
                 Lucky = NameLines[randomIndex];
 
                 //关闭允许重复时执行
@@ -432,7 +439,7 @@ namespace 班级点名器
 
                         while (Lucky == HaveNamed[j])//相同时再生成
                         {
-                            randomIndex = Name_random.Next(NameLines.Length);//生成一个随机数，并对应到数组里的内容
+                            randomIndex = RollCaller.Randompp(NameLines.Length - 1);//生成一个随机数，并对应到数组里的内容
                             Lucky = NameLines[randomIndex];
                             Console.WriteLine(Lucky);
                             j = 1;

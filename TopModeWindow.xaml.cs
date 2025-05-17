@@ -224,14 +224,12 @@ namespace 班级点名器
             string Str_Time_s = DateTime.Now.ToString("ss");//获取秒
             int Time_s = int.Parse(Str_Time_s);//str to int
 
-            int Seed = RollCaller.Randompp(0, 999);
 
 
 
             //Console.WriteLine(Seed);
 
-            Random Name_random = new Random(Seed);
-            int randomIndex = Name_random.Next(NameLines.Length);//生成一个随机数，并对应到数组里的内容
+            int randomIndex = RollCaller.Randompp(NameLines.Length - 1);//生成一个随机数，并对应到数组里的内容
             Lucky = NameLines[randomIndex];
 
             //Console.WriteLine("幸运儿："+Lucky);
@@ -245,8 +243,7 @@ namespace 班级点名器
                 {
                     ReCalled_time++;
                     Console.WriteLine("__替换" + Lucky);
-                    Name_random = new Random(RollCaller.Randompp(0, 200));
-                    randomIndex = Name_random.Next(NameLines.Length);//生成一个随机数，并对应到数组里的内容
+                    randomIndex = RollCaller.Randompp(NameLines.Length - 1);//生成一个随机数，并对应到数组里的内容
                     Lucky = NameLines[randomIndex];
                     j = 1;//重新检查
 

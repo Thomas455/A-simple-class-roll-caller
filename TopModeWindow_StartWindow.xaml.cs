@@ -91,7 +91,6 @@ namespace 班级点名器
             string Str_Time_s = DateTime.Now.ToString("ss");//获取秒
             int Time_s = int.Parse(Str_Time_s);//str to int
 
-            int Seed = RollCaller.Randompp(0, 999);
 
 
 
@@ -99,8 +98,7 @@ namespace 班级点名器
             for (int i = 0; i < 40; i++)//循环名单，抽取幸运儿
             {
                 //点一次名
-                Random Name_random = new Random(Seed + Time_s * i);
-                int randomIndex = Name_random.Next(NameLines.Length);//生成一个随机数，并对应到数组里的内容
+                int randomIndex = RollCaller.Randompp(NameLines.Length - 1);//生成一个随机数，并对应到数组里的内容
                 Lucky = NameLines[randomIndex];
                 Name.Content = Lucky;//切换文本框
 
