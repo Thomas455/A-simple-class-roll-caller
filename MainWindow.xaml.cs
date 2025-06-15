@@ -200,8 +200,6 @@ namespace 班级点名器
             
             Properties.Settings.Default.Save();
 
-            //生成启动随机种子
-            RollCaller.Start_RandomValue();
 
             //从储存中加载点名历史结果
             if(Properties.Settings.Default.Name_Called==string.Empty) Console.WriteLine("没有点名历史");
@@ -265,12 +263,8 @@ namespace 班级点名器
             //随机点名部分
             //这一部分已经尝试做到高度随机了，让每个人都有机会被抽
             string Lucky = null;//被抽中的幸运儿
+            int RollTime = 30;//点名次数
 
-
-            Random Time_Random = new Random();
-            int RollTime = Time_Random.Next(40, 65);//生成一个随机数，用于决定名单随机循环次数
-            
-            
             start.IsEnabled = false;//锁定按钮
             for (int i = 0; i<RollTime; i++)//循环名单，抽取幸运儿
             {
@@ -279,7 +273,7 @@ namespace 班级点名器
                 Lucky = NameLines[randomIndex];
                 Name.Content = Lucky;//切换文本框
 
-                await Task.Delay(500/RollTime);// 等待的延迟时间
+                await Task.Delay(30);// 等待的延迟时间
 
             }
 
@@ -409,7 +403,7 @@ namespace 班级点名器
             HaveNamed = new string[NameLines.Length+7];
             if(NameNum > NameLines.Length && Can_reName != true)
             {
-                System.Windows.MessageBox.Show("在关闭“允许重复”选项时,点名数量不可大于名单中名字数量！", "设置错误", MessageBoxButton.OKCancel, MessageBoxImage.Warning);//弹出提示框
+                System.Windows.MessageBox.Show("在关闭“允许重复”选项时,点名数量不可大于名单中名字数量！名单名字数："+ NameLines.Length+"个", "设置错误", MessageBoxButton.OKCancel, MessageBoxImage.Warning);//弹出提示框
                 return;
             }
             
