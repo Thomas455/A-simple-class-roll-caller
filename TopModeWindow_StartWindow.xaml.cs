@@ -108,6 +108,14 @@ namespace 班级点名器
 
             Lucky = RollCaller.StrTemp;//替换原名字
             Name.Content = Lucky;
+            if (Lucky.Length > 4)
+            {
+                if(250 - 40 * (Lucky.Length - 4) < 50)
+                {
+                    Name.FontSize = 50;//如果名字太长，字体变小
+                }
+                else Name.FontSize = 250-40*(Lucky.Length-4);
+            }
             await Task.Delay(100);
             //Console.WriteLine("幸运儿：" + Lucky);
             for (int i = 0; i < 3; i++)

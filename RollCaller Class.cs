@@ -21,6 +21,10 @@ namespace 班级点名器
         //随机方法
         public static int Randompp(int Max_Value)
         {
+            if (Max_Value == 0) //如果传入的最大值为0，则返回1
+            {
+                return 1;
+            }
             byte[] randomBytes = new byte[10];
             RNGCryptoServiceProvider rngServiceProvider = new RNGCryptoServiceProvider();
             rngServiceProvider.GetBytes(randomBytes);
